@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	    <script src="js/angular.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+  </head>
+  <body>     
+ <div ng-app="myApp" ng-controller="customersCtrl"> 
+ 
+ 
+
+	<ul>
+		  <li ng-repeat="x in $storage.fullData">	
+			<div ng-bind-html-unsafe="x.Post"> </div>		  
+		  </li>
+		</ul>
+		
+  <button ng-click ="load()"> load </button>
+	  <br><br>
+   <button ng-click ="reset()"> reset</button>
+   
+   <button ng-click ="button1()"> button1</button>
+   
+	 		<ul>
+		  <li ng-repeat="x in $storage.newNames">	
+			<div ng-bind-html-unsafe="x.Post"> </div>		  
+		  </li>
+		</ul>
+		
+
+		
+</div>
+
+<script>
+var app = angular.module('myApp', ["ngStorage"]);
+app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
+
+	$scope.$storage =  $localStorage;
+		
+	// fetch new data
+	$scope.getData = function(){
+		    $http.get("http://dodo.hostei.com/test.aspx")
+			.success(function(response) {$scope.$storage.newNames = response.records;
+			
+				// compare new with local old if same then do nothing.
+				if(angular.equals($scope.$storage.oldNames, $scope.$storage.newNames)) 
+				{
+					console.log("true");
+				}
+				else //new data
+				{
+					console.log("false");
+					//set old storage with new
+					$scope.$storage.oldNames  = $scope.$storage.newNames
+					//set local full storage
+					$scope.$storage.fullData = $scope.$storage.newNames.concat($scope.$storage.fullData )		
+				}
+			});
+	};
+	 	
+	//refresh every 5 seconds
+	$scope.intervalFunction = function(){
+		$timeout(function() {
+			$scope.getData();
+			$scope.intervalFunction();
+		}, 5000)
+	};
+	
+	$scope.intervalFunction();
+	
+	
+	
+	
+	$scope.load = function(){
+		$http.get("test.aspx")
+		.success(function(response) {$scope.$storage.data = response.records;
+				$scope.names = $scope.$storage.data;
+				});	
+	}
+
+	$scope.button1 = function(){
+		$http.get("test.aspx")
+			.success(function(response) {$scope.data2 = response.hello;
+				});
+	}
+	
+	$scope.reset = function(){
+		//$localStorage.$reset();
+		delete $scope.$storage.fullData;
+		$scope.names = "";
+	}
+});
+</script>
+  </body>
+</html>
