@@ -34,6 +34,7 @@
     <ul class="list">
 		<li class="list-divider" ng-repeat="x in $storage.fullData">	
 			<div ng-bind-html-unsafe="x.Post"> </div>		  
+<<<<<<< HEAD
 		</li>
 	</ul>
 		 
@@ -45,6 +46,18 @@
 			<div ng-bind-html-unsafe="x.Post"> </div>		  
 		</li>
 	</ul>
+=======
+		  </li>
+		</ul>
+		
+ 
+	  <br><br>
+   <button ng-click ="reset()"> reset</button>
+   
+   
+   
+	 
+>>>>>>> 6940473e2b7c30c7f085763d8c81b3e1d460d2ff
 
 </div>
 
@@ -52,7 +65,10 @@
 var app = angular.module('myApp', ["ngStorage"]);
 app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
 	$scope.$storage =  $localStorage;
+<<<<<<< HEAD
 	$scope.date = Date();
+=======
+>>>>>>> 6940473e2b7c30c7f085763d8c81b3e1d460d2ff
 	
 	var PageTitleNotification = {
 				Vars:{
@@ -76,7 +92,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 		
 	// fetch new data
 	$scope.getData = function(){
-		    $http.get("http://dodo.hostei.com/test.aspx")
+		    $http.get("test.aspx")
 			.success(function(response) {$scope.$storage.newNames = response.records;
 			
 				// compare new with local old if same then do nothing.
