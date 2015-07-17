@@ -3,41 +3,76 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+	<link rel="stylesheet" href="css/ratchet.css">
 	    <script src="js/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
   </head>
-  <body>     
- <div ng-app="myApp" ng-controller="customersCtrl"> 
- 
- 
+  
+     <header class="bar-title">
+    <h1 class="title">Mturk</h1>
+  </header>
+  
+  
+  <body>  
 
-	<ul>
-		  <li ng-repeat="x in $storage.fullData">	
+ <div class="content" ng-app="myApp" ng-controller="customersCtrl" > 
+     <nav class="bar-standard bar-header-secondary">
+	 <div class="tab-item" > Last updated on {{date}}</div>
+  </nav>
+  
+  <nav class="bar-tab">
+    <ul class="tab-inner">
+      <li class="tab-item active">
+        <a href="#/">
+          <img class="tab-icon" src="img/icon-home.png">
+          <div class="tab-label">Contact</div>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <br><br><br>
+    <ul class="list">
+		<li class="list-divider" ng-repeat="x in $storage.fullData">	
 			<div ng-bind-html-unsafe="x.Post"> </div>		  
-		  </li>
-		</ul>
-		
-  <button ng-click ="load()"> load </button>
-	  <br><br>
-   <button ng-click ="reset()"> reset</button>
-   
-   <button ng-click ="button1()"> button1</button>
-   
-	 		<ul>
-		  <li ng-repeat="x in $storage.newNames">	
+		</li>
+	</ul>
+		 
+	<br><br>
+		  <button class="button-positive" ng-click ="reset()">reset</button>	
+	
+	 <ul class="list">
+		<li class="list-divider" ng-repeat="x in $storage.newNames">	
 			<div ng-bind-html-unsafe="x.Post"> </div>		  
-		  </li>
-		</ul>
-		
+		</li>
+	</ul>
 
-		
 </div>
 
 <script>
 var app = angular.module('myApp', ["ngStorage"]);
 app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
-
 	$scope.$storage =  $localStorage;
+	$scope.date = Date();
+	
+	var PageTitleNotification = {
+				Vars:{
+					OriginalTitle: document.title,
+					Interval: null
+				},    
+				On: function(notification, intervalSpeed){
+					var _this = this;
+					_this.Vars.Interval = setInterval(function(){
+						 document.title = (_this.Vars.OriginalTitle == document.title)
+											 ? notification
+											 : _this.Vars.OriginalTitle;
+					}, (intervalSpeed) ? intervalSpeed : 1000);
+				},
+				Off: function(){
+					clearInterval(this.Vars.Interval);
+					document.title = this.Vars.OriginalTitle;   
+				}
+	}
+		
 		
 	// fetch new data
 	$scope.getData = function(){
@@ -55,9 +90,13 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 					//set old storage with new
 					$scope.$storage.oldNames  = $scope.$storage.newNames
 					//set local full storage
-					$scope.$storage.fullData = $scope.$storage.newNames.concat($scope.$storage.fullData )		
+					$scope.$storage.fullData = $scope.$storage.newNames.concat($scope.$storage.fullData )											
+					
+					PageTitleNotification.On("New Hit!");
+			
+			
 				}
-			});
+			});				
 	};
 	 	
 	//refresh every 5 seconds
@@ -79,7 +118,6 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				$scope.names = $scope.$storage.data;
 				});	
 	}
-
 	$scope.button1 = function(){
 		$http.get("test.aspx")
 			.success(function(response) {$scope.data2 = response.hello;
@@ -90,6 +128,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 		//$localStorage.$reset();
 		delete $scope.$storage.fullData;
 		$scope.names = "";
+		PageTitleNotification.Off();
 	}
 });
 </script>
