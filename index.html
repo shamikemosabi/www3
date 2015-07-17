@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <title>MTurk</title>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="css/ratchet.css">
 	    <script src="js/angular.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/ngStorage/0.3.6/ngStorage.min.js"></script>
+		<script src="js/app.js"></script>
   </head>
   
      <header class="bar-title">
@@ -22,6 +24,9 @@
   
   <nav class="bar-tab">
     <ul class="tab-inner">
+	   <li class="tab-item active">
+		  <button class="button-positive" ng-click ="reset()">reset</button>
+	   </li>
       <li class="tab-item active">
         <a href="#/">
           <img class="tab-icon" src="img/icon-home.png">
@@ -34,119 +39,11 @@
     <ul class="list">
 		<li class="list-divider" ng-repeat="x in $storage.fullData">	
 			<div ng-bind-html-unsafe="x.Post"> </div>		  
-<<<<<<< HEAD
 		</li>
 	</ul>
 		 
 	<br><br>
-		  <button class="button-positive" ng-click ="reset()">reset</button>	
-	
-	 <ul class="list">
-		<li class="list-divider" ng-repeat="x in $storage.newNames">	
-			<div ng-bind-html-unsafe="x.Post"> </div>		  
-		</li>
-	</ul>
-=======
-		  </li>
-		</ul>
-		
- 
-	  <br><br>
-   <button ng-click ="reset()"> reset</button>
-   
-   
-   
-	 
->>>>>>> 6940473e2b7c30c7f085763d8c81b3e1d460d2ff
 
 </div>
-
-<script>
-var app = angular.module('myApp', ["ngStorage"]);
-app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
-	$scope.$storage =  $localStorage;
-<<<<<<< HEAD
-	$scope.date = Date();
-=======
->>>>>>> 6940473e2b7c30c7f085763d8c81b3e1d460d2ff
-	
-	var PageTitleNotification = {
-				Vars:{
-					OriginalTitle: document.title,
-					Interval: null
-				},    
-				On: function(notification, intervalSpeed){
-					var _this = this;
-					_this.Vars.Interval = setInterval(function(){
-						 document.title = (_this.Vars.OriginalTitle == document.title)
-											 ? notification
-											 : _this.Vars.OriginalTitle;
-					}, (intervalSpeed) ? intervalSpeed : 1000);
-				},
-				Off: function(){
-					clearInterval(this.Vars.Interval);
-					document.title = this.Vars.OriginalTitle;   
-				}
-	}
-		
-		
-	// fetch new data
-	$scope.getData = function(){
-		    $http.get("test.aspx")
-			.success(function(response) {$scope.$storage.newNames = response.records;
-			
-				// compare new with local old if same then do nothing.
-				if(angular.equals($scope.$storage.oldNames, $scope.$storage.newNames)) 
-				{
-					console.log("true");
-				}
-				else //new data
-				{
-					console.log("false");
-					//set old storage with new
-					$scope.$storage.oldNames  = $scope.$storage.newNames
-					//set local full storage
-					$scope.$storage.fullData = $scope.$storage.newNames.concat($scope.$storage.fullData )											
-					
-					PageTitleNotification.On("New Hit!");
-			
-			
-				}
-			});				
-	};
-	 	
-	//refresh every 5 seconds
-	$scope.intervalFunction = function(){
-		$timeout(function() {
-			$scope.getData();
-			$scope.intervalFunction();
-		}, 5000)
-	};
-	
-	$scope.intervalFunction();
-	
-	
-	
-	
-	$scope.load = function(){
-		$http.get("test.aspx")
-		.success(function(response) {$scope.$storage.data = response.records;
-				$scope.names = $scope.$storage.data;
-				});	
-	}
-	$scope.button1 = function(){
-		$http.get("test.aspx")
-			.success(function(response) {$scope.data2 = response.hello;
-				});
-	}
-	
-	$scope.reset = function(){
-		//$localStorage.$reset();
-		delete $scope.$storage.fullData;
-		$scope.names = "";
-		PageTitleNotification.Off();
-	}
-});
-</script>
   </body>
 </html>
