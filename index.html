@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html data-ng-app="app">
   <head>
   <title>MTurk</title>
     <meta charset="utf-8">
@@ -11,39 +11,29 @@
   </head>
   
      <header class="bar-title">
-    <h1 class="title">Mturk</h1>
+    <h1 class="title">
+		<a href="#/">
+			Mturk
+		</a>
+	</h1>
   </header>
   
   
-  <body>  
-
- <div class="content" ng-app="myApp" ng-controller="customersCtrl" > 
-     <nav class="bar-standard bar-header-secondary">
-	 <div class="tab-item" > Last updated on {{date}}</div>
-  </nav>
-  
-  <nav class="bar-tab">
-    <ul class="tab-inner">
-	   <li class="tab-item active">
-		  <button class="button-positive" ng-click ="reset()">reset</button>
-	   </li>
-      <li class="tab-item active">
-        <a href="#/">
-          <img class="tab-icon" src="img/icon-home.png">
-          <div class="tab-label">Contact</div>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  <br><br><br>
-    <ul class="list">
-		<li class="list-divider" ng-repeat="x in $storage.fullData">	
-			<div ng-bind-html-unsafe="x.Post"> </div>		  
-		</li>
-	</ul>
-		 
-	<br><br>
-
-</div>
+  <body>
+	   <div ng-view></div>
   </body>
+  
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65316499-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
 </html>
+
+

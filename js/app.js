@@ -1,4 +1,28 @@
-var app = angular.module('myApp', ["ngStorage"]);
+var app = angular.module('app', ["ngStorage"]);
+
+
+app.config(function ($routeProvider) {
+	$routeProvider
+		.when('/',
+		{
+			controller: 'customersCtrl',
+			templateUrl: 'views/main.html'
+		})
+		
+		//
+		.when('/about',
+		{
+			controller: 'customersCtrl',
+			templateUrl: 'views/about.html'
+
+		})
+
+		
+		.otherwise({ redirectTo: '/'});
+
+});
+
+
 app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
 	$scope.$storage =  $localStorage;
 	
@@ -30,11 +54,11 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				// compare new with local old if same then do nothing.
 				if(angular.equals($scope.$storage.oldNames, $scope.$storage.newNames)) 
 				{
-					console.log("true");
+					//console.log("true");
 				}
 				else //new data
 				{
-					console.log("false");
+					//console.log("false");
 					//set old storage with new
 					$scope.$storage.oldNames  = $scope.$storage.newNames
 					//set local full storage
@@ -60,7 +84,8 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	$scope.reset = function(){
 		//$localStorage.$reset();
 		delete $scope.$storage.fullData;
-		$scope.names = "";		
+		$scope.names = "";
+		PageTitleNotification.Off();
 	}
 	
 	//Change title back after getting focus

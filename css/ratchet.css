@@ -260,7 +260,7 @@ a {
 /* Wrapper for individual tab */
 .tab-inner {
   display: -webkit-box;
-  display: box;
+  display: inline;
   height: 100%;
   list-style: none;
   -webkit-box-orient: horizontal;
@@ -269,6 +269,17 @@ a {
 
 /* Navigational tab */
 .tab-item {
+ float: left;
+  height: 100%;
+  padding-top: 9px;
+    padding-left:30%;
+  text-align: center;
+  box-sizing: border-box;
+  -webkit-box-flex: 1;
+          box-flex: 1;
+}
+
+.tab-item2 {
   height: 100%;
   padding-top: 9px;
   text-align: center;
