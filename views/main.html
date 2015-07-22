@@ -7,7 +7,7 @@
    <nav class="bar-tab">
     <ul class="tab-inner">
 	<li class="tab-item">
-	 <button class="button-positive" ng-click ="reset()">Clear</button>
+	 <button class="button-negative" ng-click ="reset()">Clear All</button>
 	 </li>
       <li class="tab-item">
         <a href="#/about">
@@ -19,9 +19,14 @@
   </nav>
   
   <br><br><br><br><br><br>
+  
     <ul class="list">
 		<li class="list-divider" ng-repeat="x in $storage.fullData">	
-			<div ng-bind-html-unsafe="x.Post"> </div>		  
+			<div class ="blah">
+				<div ng-bind-html-unsafe="x.Post" ></div>
+				<button class ="button-main" ng-click="delete($index)">X</button>
+				<button class ="button-positive MG  " ng-click="delete($index)">PandA</button>
+			</div>
 		</li>
 	</ul>
 		 

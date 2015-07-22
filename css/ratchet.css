@@ -551,7 +551,6 @@ a {
   border-bottom-width: 0;
 }
 
-
 /* List dividers
 -------------------------------------------------- */
 
@@ -594,6 +593,16 @@ a {
   top: 50%;
   right: 10px;
 }
+
+.list [class*="MG"],
+.list .toggle {
+  position: absolute;
+  top: 90%;
+  right: 10px;
+  padding: 12px 24px;
+  font: 16px/1.25 "Helvetica Neue", sans-serif;
+}
+
 
  /* Position chevrons/counts vertically centered on the right in list items */
 .list .chevron,

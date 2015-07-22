@@ -68,10 +68,30 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 					$scope.date = Date();
 
 				}
+				
+				$scope.cleanNull();
+				
 			});				
 	};
+	
+	// some reason grabbing data always has a trailing null object... lets get rid of it
+	$scope.cleanNull = function(){
+		if($scope.$storage.fullData.length > 0)
+		{
+			jQuery.each($scope.$storage.fullData, function(i, val) {
+				if(val==null)
+				{
+					$scope.$storage.fullData.splice(i,1);
+				}
+			});
+		}	
+	};
+	
+	$scope.delete = function(o){
+	   $scope.$storage.fullData.splice(o,1);
+	};
 	 	
-	//refresh every 5 seconds
+		//refresh
 	$scope.intervalFunction = function(){
 		$timeout(function() {
 			$scope.getData();
@@ -84,6 +104,10 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	$scope.reset = function(){
 		//$localStorage.$reset();
 		delete $scope.$storage.fullData;
+		//temporary
+		//delete $scope.$storage.oldNames;
+		//delete $scope.$storage.newNames;
+		
 		$scope.names = "";
 		PageTitleNotification.Off();
 	}
