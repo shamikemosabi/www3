@@ -597,7 +597,7 @@ a {
 .list [class*="MG"],
 .list .toggle {
   position: absolute;
-  top: 90%;
+  top: 80%;
   right: 10px;
   padding: 12px 24px;
   font: 16px/1.25 "Helvetica Neue", sans-serif;
