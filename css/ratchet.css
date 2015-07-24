@@ -590,19 +590,18 @@ a {
 .list [class*="count"],
 .list .toggle {
   position: absolute;
-  top: 50%;
+  top: 10%;
   right: 10px;
 }
 
 .list [class*="MG"],
 .list .toggle {
   position: absolute;
-  top: 80%;
+  top: 85%;
   right: 10px;
   padding: 12px 24px;
   font: 16px/1.25 "Helvetica Neue", sans-serif;
 }
-
 
  /* Position chevrons/counts vertically centered on the right in list items */
 .list .chevron,
@@ -742,7 +741,7 @@ select {
   width: 65%;
   padding-left: 0;
   margin-bottom: 0;
-  border-bottom: 0;
+  border-bottom: 0button-positive2 
 }/* General button styles
 -------------------------------------------------- */
 
@@ -768,7 +767,7 @@ select {
 
 /* Active */
 [class*="button"]:active {
-  padding-top: 5px;
+  padding-top: 5px;	
   padding-bottom: 3px;
   color: #333;
   background-color: #ccc;
@@ -781,7 +780,7 @@ select {
 
 /* Overriding styles for buttons with modifiers  */
 .button-main,
-.button-positive,
+.button-positive,.button-positive2,
 .button-negative {
   color: #fff;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, .3);
@@ -796,7 +795,7 @@ select {
 }
 
 /* Positive button  */
-.button-positive {
+.button-positive, .button-positive2 {
   background-color: #34ba15;
   background-image: -webkit-linear-gradient(top, #34ba15 0, #2da012 100%);
   background-image: linear-gradient(to bottom, #34ba15 0, #2da012 100%);
@@ -813,16 +812,22 @@ select {
 
 /* Active state for buttons with modifiers */
 .button-main:active,
-.button-positive:active,
+.button-positive:active, .button-positive2:active,
 .button-negative:active {
   color: #fff;
 }
 .button-main:active {
   background-color: #0876b1;
 }
+.button-positive2:active{
+ background-color: #298f11;
+ padding: 12px 24px;
+}
+
 .button-positive:active {
   background-color: #298f11;
 }
+
 .button-negative:active {
   background-color: #b21a1a;
 }
