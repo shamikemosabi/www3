@@ -16,6 +16,12 @@ app.config(function ($routeProvider) {
 			templateUrl: 'views/about.html'
 
 		})
+		.when('/stats',
+		{
+			controller: 'statsCtrl',
+			templateUrl: 'views/stats.html'
+
+		})
 
 		
 		.otherwise({ redirectTo: '/'});
