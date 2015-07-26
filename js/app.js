@@ -49,10 +49,11 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	// fetch new data
 	$scope.getData = function(){
 		    $http.get("test.aspx")
-			.success(function(response) {$scope.$storage.newNames = response.records;
+			.success(function(response) {
+				$scope.$storage.newNames = response;
 			
 				// compare new with local old if same then do nothing.
-				if(angular.equals($scope.$storage.oldNames, $scope.$storage.newNames)) 
+				if(angular.equals($scope.$storage.oldNames, $scope.$storage.newNames.records)) 
 				{
 					//console.log("true");
 				}
@@ -60,13 +61,12 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				{
 					//console.log("false");
 					//set old storage with new
-					$scope.$storage.oldNames  = $scope.$storage.newNames
+					$scope.$storage.oldNames  = $scope.$storage.newNames.records
 					//set local full storage
-					$scope.$storage.fullData = $scope.$storage.newNames.concat($scope.$storage.fullData )											
+					$scope.$storage.fullData = $scope.$storage.newNames.records.concat($scope.$storage.fullData )											
 					
 					PageTitleNotification.On("New Hit!");
-					$scope.date = Date();
-
+					$scope.date = $scope.$storage.newNames.date;
 				}
 				
 				$scope.cleanNull();
