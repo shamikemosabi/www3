@@ -59,7 +59,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				$scope.$storage.newNames = response;
 			
 				// compare new with local old if same then do nothing.
-				if(angular.equals($scope.$storage.oldNames, $scope.$storage.newNames.records)) 
+				if(angular.equals($scope.$storage.oldNames.records, $scope.$storage.newNames.records)) 
 				{
 					//console.log("true");
 				}
@@ -67,17 +67,19 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				{
 					//console.log("false");
 					//set old storage with new
-					$scope.$storage.oldNames  = $scope.$storage.newNames.records
+					$scope.$storage.oldNames  = $scope.$storage.newNames
 					//set local full storage
 					$scope.$storage.fullData = $scope.$storage.newNames.records.concat($scope.$storage.fullData )											
 					
 					PageTitleNotification.On("New Hit!");
-					$scope.date = $scope.$storage.newNames.date;
+					
 				}
 				
 				$scope.cleanNull();
 				
-			});				
+			});		
+
+		$scope.date = $scope.$storage.oldNames.date;			
 	};
 	
 	// some reason grabbing data always has a trailing null object... lets get rid of it
