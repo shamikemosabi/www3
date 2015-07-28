@@ -82,7 +82,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	
 	// some reason grabbing data always has a trailing null object... lets get rid of it
 	$scope.cleanNull = function(){
-		if($scope.$storage.fullData.length > 0)
+		if($scope.$storage.fullData != null && $scope.$storage.fullData.length > 0)
 		{
 			jQuery.each($scope.$storage.fullData, function(i, val) {
 				if(val==null)

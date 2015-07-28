@@ -18,31 +18,31 @@
   </nav>
   
   <br><br><br><br><br><br>
-  
-
-    <ul class="list">
-	
-	
-	<li class="list-divider" ng-repeat="x in data">	
-			<div class ="blah">
-				MTF : {{x.MTF}}
-			</div>
-			<div class ="blah">
-				MTG : {{x.MTG}}
-			</div>
-			<div class ="blah">
-				TN : {{x.TN}}
-			</div>
-			
-			<div ng-repeat = "y in x.time">
-				{{y.name + y.value}}
-			</div>
-	</li>
-	
-
-	</ul>
-		 
-	<br><br>
+ 
+	<div class="CSSTable" ng-repeat="x in data">
+                <table >
+                    <tr>
+                        <td>
+                            Time
+                        </td>
+                        <td >
+                            Hits
+                        </td>
+                    </tr>
+					<tr ng-repeat = "y in x.time">
+							<td >
+								{{y.name}}
+							</td>
+							<td>
+								{{y.value}}
+							</td>
+					</tr>    						
+                
+                </table>
+     </div>
+	 
+	 </br></br></br></br>
+            
 
 
 </div>
