@@ -216,8 +216,8 @@ a {
 }
 .pay input {
   z-index: 1000; position:relative;
-	left: 95%;
-	top : 50%;
+	left: 94%;
+	top : 10px;
 }
 
 /* Centered text in the .bar-title */
