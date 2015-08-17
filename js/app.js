@@ -51,7 +51,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				}
 	}
 		
-		
+
 	// fetch new data
 	$scope.getData = function(){
 		    $http.get("test.aspx")
@@ -67,18 +67,22 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				// OR if oldName hasn't been initiazed
 				if(angular.equals($scope.$storage.oldNames.records, $scope.$storage.newNames.records)) 
 				{
-					console.log("true");
+					//console.log("true");
 				}
 				else //new data
 				{
-					console.log("false");
+					//console.log("false");
 					//set old storage with new
 					$scope.$storage.oldNames  = $scope.$storage.newNames
 					//set local full storage
 					$scope.$storage.fullData = $scope.$storage.newNames.records.concat($scope.$storage.fullData )											
 					
-					PageTitleNotification.On("New Hit!");
-					
+					if($scope.notify)
+					{	
+						PageTitleNotification.On("New Hit!");
+						//console.log("new hit");
+						$scope.notify= false;
+					}
 				}
 				
 				$scope.cleanNull();
@@ -133,6 +137,8 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	//Change title back after getting focus
 	window.addEventListener("focus", function(event) {  
 			PageTitleNotification.Off();
+			$scope.notify= true;
+		//	console.log("focus")
 		}, false);
 	
 });
