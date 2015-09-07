@@ -101,3 +101,19 @@
 .CSSTable tr:first-child td:last-child{
 	border-width:0px 0px 1px 1px;
 }
+
+.adsbygoogle{
+	position: absolute;
+	top: 10%;
+	right: 0;
+	bottom: 0;
+	left: 80%;
+}
+
+.botAd{
+	position: absolute;
+	top: 85%;
+	right: 0;
+	bottom: 0;
+	left: 80%;
+}
