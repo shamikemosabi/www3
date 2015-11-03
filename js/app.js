@@ -16,10 +16,10 @@ app.config(function ($routeProvider) {
 			templateUrl: 'views/about.html'
 
 		})
-		.when('/stats',
+		.when('/setting',
 		{
-			controller: 'statsCtrl',
-			templateUrl: 'views/stats.html'
+			controller: 'customersCtrl',
+			templateUrl: 'views/setting.html'
 
 		})
 
@@ -30,8 +30,7 @@ app.config(function ($routeProvider) {
 
 
 app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
-	$scope.$storage =  $localStorage;
-	
+	$scope.$storage =  $localStorage;	
 	 
 	var PageTitleNotification = {
 				Vars:{
@@ -65,10 +64,11 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 					$scope.$storage.oldNames = {};
 				}
 				if($scope.$storage.bSound==null)
-				{
-					console.log("bSound is null")
+				{					
+					console.log("sound null");
 					$scope.$storage.bSound = true;
-				}				
+				}		
+			
 				// compare new with local old if same then do nothing.
 				// OR if oldName hasn't been initiazed
 				if(angular.equals($scope.$storage.oldNames.records, $scope.$storage.newNames.records)) 
@@ -91,7 +91,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 						
 						if($scope.$storage.bSound)
 						{
-							var filename = "sound/button-1";
+							var filename = "sound/traffic";
 							document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
 						}
 						
@@ -140,8 +140,9 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 		//$localStorage.$reset();
 		delete $scope.$storage.fullData;
 		//temporary
-		//delete $scope.$storage.oldNames;
-		//delete $scope.$storage.newNames;
+		delete $scope.$storage.oldNames;
+		delete $scope.$storage.newNames;
+		delete $scope.$storage.bSound;
 		
 		$scope.names = "";
 		PageTitleNotification.Off();
