@@ -32,6 +32,7 @@ app.config(function ($routeProvider) {
 app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
 	$scope.$storage =  $localStorage;
 	
+	 
 	var PageTitleNotification = {
 				Vars:{
 					OriginalTitle: document.title,
@@ -63,6 +64,11 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				{
 					$scope.$storage.oldNames = {};
 				}
+				if($scope.$storage.bSound==null)
+				{
+					console.log("bSound is null")
+					$scope.$storage.bSound = true;
+				}				
 				// compare new with local old if same then do nothing.
 				// OR if oldName hasn't been initiazed
 				if(angular.equals($scope.$storage.oldNames.records, $scope.$storage.newNames.records)) 
@@ -80,8 +86,15 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 					if($scope.notify)
 					{	
 						PageTitleNotification.On("New Hit!");
-						//console.log("new hit");
+						console.log("new hit");
 						$scope.notify= false;
+						
+						if($scope.$storage.bSound)
+						{
+							var filename = "sound/button-1";
+							document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
+						}
+						
 					}
 				}
 				
