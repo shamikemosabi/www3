@@ -65,7 +65,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				}
 				if($scope.$storage.bSound==null)
 				{					
-					console.log("sound null");
+					//console.log("sound null");
 					$scope.$storage.bSound = true;
 				}		
 			
@@ -86,7 +86,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 					if($scope.notify)
 					{	
 						PageTitleNotification.On("New Hit!");
-						console.log("new hit");
+						//console.log("new hit");
 						$scope.notify= false;
 						
 						if($scope.$storage.bSound)
@@ -140,9 +140,9 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 		//$localStorage.$reset();
 		delete $scope.$storage.fullData;
 		//temporary
-		delete $scope.$storage.oldNames;
-		delete $scope.$storage.newNames;
-		delete $scope.$storage.bSound;
+		//delete $scope.$storage.oldNames;
+		//delete $scope.$storage.newNames;
+		//delete $scope.$storage.bSound;
 		
 		$scope.names = "";
 		PageTitleNotification.Off();
