@@ -18,7 +18,7 @@
   </nav>
   
    <div class="content"> 
-		<label>Sound:</label>
+			<label>Sound:</label>
 				<div class="radio">
 					<label>
 						<input type="radio" name="chickenEgg" ng-value="true" ng-model="$storage.bSound">
@@ -31,6 +31,21 @@
 						OFF
 					</label>
 				</div>
+				
+				
+				<div class="dropdown">
+					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Sounds
+					<span class="caret"></span></button>
+					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+						<li ng-repeat="a in soundList"><a ng-click="dropboxitemselected(a)">{{a}}</a></li>
+					</ul>
+				<div>
+				
+				<br>
+				<input class='form-control' type=range min=0 max=1 step=0.01 ng-model='audio.volume'>
+				
+				{{audio.volume}}
+						
 	</div>
 
 <script>

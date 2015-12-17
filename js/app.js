@@ -1,7 +1,7 @@
-var app = angular.module('app', ["ngStorage"]);
+var app = angular.module('app', ["ngRoute", "ngStorage", "ngAudio"]);
 
 
-app.config(function ($routeProvider) {
+app.config( ['$routeProvider', function($routeProvider) {
 	$routeProvider
 		.when('/',
 		{
@@ -26,12 +26,12 @@ app.config(function ($routeProvider) {
 		
 		.otherwise({ redirectTo: '/'});
 
-});
+}]);
 
 
-app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout) {
+app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout, $sce, ngAudio) {
 	$scope.$storage =  $localStorage;	
-	 
+	 alert("load controller");
 	var PageTitleNotification = {
 				Vars:{
 					OriginalTitle: document.title,
@@ -51,7 +51,22 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 				}
 	}
 		
+	// load default audio:
+	// if null then default
+	if ($scope.$storage.currentSound==null){$scope.$storage.currentSound = 'traffic.mp3'; }
+	
+	 $scope.audio = ngAudio.load('sound/'+$scope.$storage.currentSound);	 
+	
+	 $scope.soundList = ['traffic', 'button-1'];
+	 
+	 $scope.dropboxitemselected = function (item) {		   		   
+		   $scope.$storage.currentSound = item+".mp3";		   
+		   $scope.audio = ngAudio.load('sound/'+$scope.$storage.currentSound);
+		   $scope.audio.play();
+	}
 
+		
+	
 	// fetch new data
 	$scope.getData = function(){
 		    $http.get("test.aspx")
@@ -91,8 +106,9 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 						
 						if($scope.$storage.bSound)
 						{
-							var filename = "sound/traffic";
-							document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
+							$scope.audio.play();
+							//var filename = "sound/traffic";
+							//document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
 						}
 						
 					}
@@ -122,6 +138,12 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 		}	
 	};
 	
+	
+	$scope.renderHtml = function(html_code) {
+		return $sce.trustAsHtml(html_code);
+	};
+
+
 	$scope.delete = function(o){
 	   $scope.$storage.fullData.splice(o,1);
 	};

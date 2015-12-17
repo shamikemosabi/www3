@@ -27,11 +27,11 @@
  
     <ul class="list">
 		<li class="list-divider" ng-repeat="x in $storage.fullData">	
-			<div class ="blah">
-				<div ng-bind-html-unsafe="x.Post" ></div>
+			<div class ="blah">			
+				<div ng-bind-html="renderHtml(x.Post)" ></div>				
 				<button class ="button-main" ng-click="delete($index)">X</button>
 				<a href="{{x.link}}" target="_blank">
-					<button class ="button-positive2 MG">PandA</button>
+					<button class ="button-positive2 MG" ng-click="delete($index)">PandA</button>
 				</a>
 			</div>
 		</li>
