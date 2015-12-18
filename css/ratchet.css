@@ -681,6 +681,7 @@ input[type=search] {
   border-radius: 30px;
 }
 
+
 /* Allow text area's height to grow larger than a normal input */
 textarea {
   height: auto;
@@ -1202,7 +1203,7 @@ select {
 /* Outer wrapper for slider */
 .slider {
   overflow: hidden;
-  background-color: #000;
+
 }
 
 /* Inner wrapper for slider (width of all slides together) */

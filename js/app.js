@@ -31,7 +31,7 @@ app.config( ['$routeProvider', function($routeProvider) {
 
 app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout, $sce, ngAudio) {
 	$scope.$storage =  $localStorage;	
-	 alert("load controller");
+	 
 	var PageTitleNotification = {
 				Vars:{
 					OriginalTitle: document.title,
@@ -54,16 +54,34 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	// load default audio:
 	// if null then default
 	if ($scope.$storage.currentSound==null){$scope.$storage.currentSound = 'traffic.mp3'; }
+	if ($scope.$storage.currVol==null){$scope.$storage.currVol = .5 ; }
 	
 	 $scope.audio = ngAudio.load('sound/'+$scope.$storage.currentSound);	 
-	
-	 $scope.soundList = ['traffic', 'button-1'];
+	 $scope.audio.volume =  $scope.$storage.currVol;
+
+	 
+	 $scope.soundList = ['apple-bite', 'blop', 'bubble-pop', 'cash-register','clinking','default','evil-laugh','fart','fly', 'hey','I-love-you', 'kid-laugh','pew','phone-vibrate','pin','pool', 'rain','reload','suspense','toke'];
 	 
 	 $scope.dropboxitemselected = function (item) {		   		   
 		   $scope.$storage.currentSound = item+".mp3";		   
 		   $scope.audio = ngAudio.load('sound/'+$scope.$storage.currentSound);
+		  
 		   $scope.audio.play();
 	}
+	
+	$scope.playSound = function()
+	{
+		$scope.audio.play();
+	}
+	
+	$scope.saveSlider = function(v)
+	{
+		
+		$scope.$storage.currVol = v;
+		$scope.audio.volume = $scope.$storage.currVol;
+	}
+	
+// end sound
 
 		
 	
@@ -105,10 +123,8 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 						$scope.notify= false;
 						
 						if($scope.$storage.bSound)
-						{
+						{							
 							$scope.audio.play();
-							//var filename = "sound/traffic";
-							//document.getElementById("sound").innerHTML='<audio autoplay="autoplay"><source src="' + filename + '.mp3" type="audio/mpeg" /><source src="' + filename + '.ogg" type="audio/ogg" /><embed hidden="true" autostart="true" loop="false" src="' + filename +'.mp3" /></audio>';
 						}
 						
 					}

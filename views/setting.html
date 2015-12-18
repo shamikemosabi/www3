@@ -18,33 +18,60 @@
   </nav>
   
    <div class="content"> 
-			<label>Sound:</label>
-				<div class="radio">
-					<label>
-						<input type="radio" name="chickenEgg" ng-value="true" ng-model="$storage.bSound">
-						ON
-					</label>
-				</div>
-				<div class="radio">
-					<label>
-						<input type="radio" name="chickenEgg" ng-value="false" ng-model="$storage.bSound">
-						OFF
-					</label>
-				</div>
+   
+		<div class="col-md-10">
+				
+					<label class="label label-default" >Sound:</label>
 				
 				
-				<div class="dropdown">
-					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">Sounds
-					<span class="caret"></span></button>
+				
+						<div class="radio">
+							<label>
+								<input type="radio" name="chickenEgg" ng-value="true" ng-model="$storage.bSound">
+								ON
+							</label>
+						</div>
+						<div class="radio">
+							<label>
+								<input type="radio" name="chickenEgg" ng-value="false" ng-model="$storage.bSound">
+								OFF
+							</label>
+						</div>
+
+
+		</div>
+	
+		
+		<div class="col-md-3">
+		
+			
+				<div class="input-group	">
+					
+					<input class='soundSlider form-control' type=range min=0 max=1 step=0.02 ng-model='audio.volume'  ng-change="saveSlider(audio.volume)"/>
+							{{audio.volume }} 
+				
+				</div>
+	
+				
+				
+				<div class="dropdown col-md-6">
+					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{$storage.currentSound}}
+						<span class="caret"></span>
+					</button>
 					<ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
 						<li ng-repeat="a in soundList"><a ng-click="dropboxitemselected(a)">{{a}}</a></li>
 					</ul>
-				<div>
+				</div>
+						
+						
+				<div class="col-md-6">			
+					<button class="btn btn-default" ng-click="playSound()">play</button>
+				</div>
 				
-				<br>
-				<input class='form-control' type=range min=0 max=1 step=0.01 ng-model='audio.volume'>
+		</div>
 				
-				{{audio.volume}}
+				
+
 						
 	</div>
 
