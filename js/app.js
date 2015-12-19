@@ -53,7 +53,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 		
 	// load default audio:
 	// if null then default
-	if ($scope.$storage.currentSound==null){$scope.$storage.currentSound = 'traffic.mp3'; }
+	if ($scope.$storage.currentSound==null){$scope.$storage.currentSound = 'default.mp3'; }
 	if ($scope.$storage.currVol==null){$scope.$storage.currVol = .5 ; }
 	
 	 $scope.audio = ngAudio.load('sound/'+$scope.$storage.currentSound);	 
@@ -123,8 +123,14 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 						$scope.notify= false;
 						
 						if($scope.$storage.bSound)
-						{							
-							$scope.audio.play();
+						{	
+							// some reason this may be old audio object lets force create object again with new sound
+							$scope.audio = ngAudio.load('sound/'+$scope.$storage.currentSound);	 
+							$scope.audio.volume =  $scope.$storage.currVol;						
+							$scope.audio.play(); 
+							
+							//console.log($scope.$storage.currentSound);
+							//console.log( $scope.audio);
 						}
 						
 					}
