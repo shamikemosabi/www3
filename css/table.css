@@ -119,10 +119,42 @@
 }
 
 .soundSlider{
-
   height: 34px;
   width: 50%;
   font-size: 14px;
   border-radius: 30px;
 }
 
+.num{
+  font: 14px/1.25 "Helvetica Neue", sans-serif;
+}
+
+.up{
+  color: blue;
+ 
+}
+
+.down{
+  color:red;
+}
+
+.vote{
+ position: absolute;
+  top: 0%;
+  right: 5%;
+  padding: 6px 12px;
+  font: 12px/1.25 "Helvetica Neue", sans-serif;
+
+}
+
+.pay input {
+   z-index: 1000; position:relative;
+   z-index: 1000; position:relative;
+	left: 95%;
+	left: 94%;
+	top : 50%;
+	top : 10px;
+ }
+ 
+ 
+ 

@@ -612,6 +612,9 @@ a {
   font: 16px/1.25 "Helvetica Neue", sans-serif;
 }
 
+
+
+
  /* Position chevrons/counts vertically centered on the right in list items */
 .list .chevron,
 .list [class*="count"] {
@@ -751,7 +754,7 @@ select {
   width: 65%;
   padding-left: 0;
   margin-bottom: 0;
-  border-bottom: 0button-positive2 
+  border-bottom: 0; 
 }/* General button styles
 -------------------------------------------------- */
 
