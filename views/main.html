@@ -5,7 +5,7 @@
      <nav class="bar-tab">
     <ul class="tab-inner">
 	<li class="tab-item">
-	 <button class="button-negative" ng-click ="reset()">Clear All</button>
+	 <button class="button-negative " ng-click ="reset()">Clear All</button>
 	 </li>
       <li class="tab-item">
         <a href="#/about">
@@ -40,15 +40,33 @@
 						&nbsp;<span class="num" ng-class="{up: value>=1, down: value < 0 , }"> {{loadLikes(this, x.link)}} </span>
 					</br>
 				<button style="border: none;  padding: 0; background: none;" class="fa fa-arrow-circle-down fa-2x dislike1" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'down', false:''}[buttonDisable==false]"></button>	
+				</br>
+				&nbsp;&nbsp;<a ng-click="open(x.Post, x.link)" class="plus">+</a>	
+				
 				</div>
+				
+				
+				
 			</div>
+			
+
 		</li>
 	</ul>
 		 
 	<br><br>
-
-
 </div>
+
+<div class = "chat" >
+
+		<textarea readonly class="chatDisplay "> {{loadChat()}}</textarea>
+		
+		<div >
+			<input ng-model="txtchat" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message..."> 
+			<button class="btn btn-info" type="button" ng-click="send()">Send</button>
+			<button class="btn btn-warning" type="button" ng-click="clearChat()">Clear Chat</button>
+		</div>	
+</div>
+
 
   <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

@@ -147,6 +147,30 @@
 
 }
 
+.chat{
+	position: fixed;
+	 top: 11%;
+	  left: 2px;
+	    display: block;
+	    width: 20%;
+		height:82%;
+		  overflow: scroll;
+}
+
+.chatDisplay {
+	height:85%;
+	 resize: none;
+}
+
+.plus{
+ position: absolute;
+  top: 21%;
+  right: 80%;
+  padding: 6px 12px;
+  font: 24px/1.25 "Helvetica Neue", sans-serif;
+	color:black;
+}
+
 .pay input {
    z-index: 1000; position:relative;
    z-index: 1000; position:relative;

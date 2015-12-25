@@ -1,4 +1,4 @@
-var app = angular.module('app', ["ngRoute", "ngStorage", "ngAudio"]);
+var app = angular.module('app', ["ngRoute", "ngStorage", "ngAudio", "firebase", "ui.bootstrap"]);
 
 
 app.config( ['$routeProvider', function($routeProvider) {
@@ -29,8 +29,24 @@ app.config( ['$routeProvider', function($routeProvider) {
 }]);
 
 
-app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeout, $sce, ngAudio) {
+
+
+app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject ) {
+	
+	
 	$scope.$storage =  $localStorage;	
+	 
+	 //inialitze object
+		var ref = new Firebase("https://amber-fire-5449.firebaseio.com/");
+		var list = $firebaseArray(ref);
+		
+		
+		 var ref2 = new Firebase("https://amber-fire-5449.firebaseio.com/chat/");
+		 $scope.chat = $firebaseArray(ref2);
+		 
+	
+
+	 //firebase
 	 
 	var PageTitleNotification = {
 				Vars:{
@@ -161,9 +177,204 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	};
 	
 	
+	$scope.open = function (title, link) {
+		var modalInstance = $uibModal.open({
+		templateUrl: 'views/Popup.html',
+		controller: 'PopupInstanceController',
+		resolve: {
+			title: function () {
+				return title;
+			},
+			list: function (){
+			    return list;
+			},
+			link: function(){
+				return stripForID(link);
+			},
+			ref: function(){
+				return ref;
+			}
+			
+		}
+		});
+		}
+
+	function stripForID(str){
+		var id = str.replace("https://www.mturk.com/mturk/", ""); 
+		id = id.replace(".", "");  // cant store . as keys
+		id = id.replace("#", "");  // cant store # as keys
+		return id;
+	}
+	
+	
+	$scope.loadLikes = function(obj, o){
+		var ret = 0;
+		var id = stripForID(o);
+		
+		var rec = list.$getRecord(id);
+		if(rec!=null){		
+			ret = rec.value;
+		}
+		
+		obj.value = ret;
+		return ret;
+	}
+	
+	$scope.updateHit = function (obj, link, bool){
+
+		var id = stripForID(link);
+		
+		var rec = list.$getRecord(id);
+		if(rec==null) // if doesn't exist we add
+		{
+			var child = ref.child(id); 
+			var num = 0;
+			if(bool==true)
+			{
+				num = 1;
+				obj.buttonDisable = true;
+			}
+			else{
+				num = -1;
+				obj.buttonDisable = false;
+			}
+			child.set(
+			{ 
+				value: num
+			});			
+		}
+		else{// it exists upvote, or downvote
+			
+			var index = list.$indexFor(id);
+			if(bool==true)//upvote
+			{	
+				var v = rec.value+1; //make sure to not be 0 after updating it.
+				if(v == 0){ v = 1;}
+				list[index].value = v;
+				obj.buttonDisable = true;
+				
+			}
+			else
+			{
+				var v = rec.value-1;
+				if(v == 0){ v = -1;}
+				list[index].value = v;
+				obj.buttonDisable = false;
+			}
+				
+			list.$save(index).then(function(ref) {
+			  ref.key() === list[index].$id; 
+			});
+			
+		}
+
+	}
+	
+	
+
+//chat
+	
+		$scope.loadChat = function (){
+
+		var ret = "";
+		 
+			for( j = 0; j <$scope.chat.length; j ++ )
+			{
+				value = $scope.chat[j];
+				if( $scope.displayChat == null)
+				{
+					 $scope.displayChat = []; //create empty object 
+				}
+				
+				var bool=true;
+				
+				for( i = 0 ; i< $scope.displayChat.length ; i ++)
+				{
+					var blah = $scope.displayChat[i];
+					if(blah.msg==value.msg)
+					{
+						bool = false;
+						break;
+					}
+				}
+				if(bool)
+				{
+					 $scope.displayChat.push(value);
+					
+				}
+			
+			}
+			
+			
+			angular.forEach($scope.displayChat,function(value,index){			
+				ret += "- " + value.msg + "\n";
+			});
+			
+			
+		
+		return ret;
+	}	 
+		
+	 
+	 /*
+	$scope.loadChat = function() {		 
+	     angular.forEach($scope.chat,function(value,index){
+            $scope.displaChat += value.msg + "\n\n";
+         })
+	}
+	*/
+	
+	$scope.send = function(){
+		
+	
+		if($scope.txtchat == null || $scope.txtchat == "")
+		{ 
+			return false; 
+		}
+		
+		 $scope.chat.$add({
+             msg: $scope.txtchat
+          });
+		  
+		  $scope.txtchat = "";
+	}
+	
+	$scope.addMessage = function(e) {
+		if (e.keyCode === 13 && $scope.txtchat) {
+			 $scope.chat.$add({
+             msg: $scope.txtchat
+          });
+		  
+		  $scope.txtchat = "";
+		}
+	
+	}
+	
+	$scope.clearChat = function()
+	{
+		
+		 
+		 
+		  var obj = $firebaseObject(ref2);
+			obj.$remove().then(function(ref) {
+			    $scope.displayChat = [];
+			}, function(error) {
+			  console.log("Error:", error);
+			});
+			
+	}
+	
+//chat	
+	
+			
+			
+
+	
 	$scope.renderHtml = function(html_code) {
 		return $sce.trustAsHtml(html_code);
 	};
+	
+
 
 
 	$scope.delete = function(o){
@@ -174,6 +385,7 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 	$scope.intervalFunction = function(){
 		$timeout(function() {
 			$scope.getData();
+			
 			$scope.intervalFunction();
 		}, 5000)
 	};
@@ -198,5 +410,68 @@ app.controller('customersCtrl', function($scope, $http,  $localStorage,  $timeou
 			$scope.notify= true;
 		//	console.log("focus")
 		}, false);
-	
+		
+		
+		
+
+
 });
+
+
+app.controller('PopupInstanceController',
+	['$scope','$uibModalInstance', 'title', 'list', 'link', '$sce', 'ref' , '$firebaseArray',
+		function ($scope, $uibModalInstance, title, list, link, $sce, ref,  $firebaseArray) {								 
+			$scope.title = $sce.trustAsHtml(title);
+			$scope.list  = list
+			$scope.ref   = ref
+			$scope.link  = link // is actually ID
+			$scope.close = function () {
+			$uibModalInstance.dismiss('cancel');
+			};
+			
+			$scope.save = function(){
+				
+				if($scope.txtcomment == null || $scope.txtcomment == "")
+				{ 
+					return false; 
+				}
+				
+				var rec = list.$getRecord($scope.link);
+				//making comment without voting first
+				if(rec==null) {
+
+					var uniqueId  = {
+						id: $scope.link,
+						value: 0		
+					}
+					
+					ref.child(uniqueId.id).set(uniqueId);
+					ref.child(uniqueId.id).child('comments').push({body: $scope.txtcomment});
+				}
+				else{ // we already have this in db just need to add comment
+					
+					ref.child($scope.link).child('comments').push({body: $scope.txtcomment});
+					
+				}
+			
+				var recAgain = list.$getRecord($scope.link);
+				
+				if(recAgain!=null) $scope.comments = recAgain.comments;
+				
+				$scope.placeholder  = $scope.txtcomment;
+				
+				$scope.txtcomment = "";
+						
+			};
+			
+			// loads comment	
+			 var ret = ""; 
+		     var rec = list.$getRecord($scope.link);
+			 if(rec!=null){		
+		     	ret = rec.comments;
+			 }
+			 $scope.comments = ret;
+			
+	
+		}
+	]);

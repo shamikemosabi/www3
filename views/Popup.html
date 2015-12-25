@@ -1,0 +1,27 @@
+<div class="modal-header">
+<h4 class="modal-title"><div ng-bind-html="title" ></div></h4>
+
+</div>
+<div class="modal-body">
+
+
+<ul id="example-messages" class="example-chat-messages">
+  <li ng-repeat="msg in comments">
+  {{msg.body}}
+  </li>
+ <li> {{placeholder}} </li>
+</ul>
+	
+
+</br>
+ <textarea ng-model="txtcomment" placeholder="Post Your Time or Comment"></textarea>
+</div>
+<div class="modal-footer">
+<button class="btn btn-info" type="button"
+ng-click="save()">Save</button>
+
+<button class="btn btn-warning" type="button"
+ng-click="close()">Cancel</button>
+
+
+</div>

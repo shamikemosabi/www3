@@ -124,7 +124,7 @@ a {
   top: 0;
   right: 20%;
   bottom: 0;
-  left: 0;
+  left: 20%;
   overflow: auto;
   background-color: #fff;
   -webkit-transition-property: top, bottom;
@@ -1167,34 +1167,8 @@ select {
   border: 1px solid #000;
   border-radius: 3px;
   -webkit-overflow-scrolling: touch;
-}/* Modals
--------------------------------------------------- */
-.modal {
-  position: fixed; 
-  top: 0;
-  opacity: 0;
-  z-index: 11; 
-  width: 100%;
-  min-height: 100%;
-  overflow: hidden;
-  background-color: #fff;  
-  -webkit-transform: translate3d(0, 100%, 0);
-          transform: translate3d(0, 100%, 0);
-  -webkit-transition: -webkit-transform .25s ease-in-out, opacity 1ms .25s;
-          transition:         transform .25s ease-in-out, opacity 1ms .25s;
 }
 
-/* Modal - When active
--------------------------------------------------- */
-.modal.active {
-  opacity: 1;
-  height: 100%;
-  -webkit-transition: -webkit-transform .25s ease-in-out;
-          transition:         transform .25 ease-in-out;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0);
-}/* Slider styles (to be used with sliders.js)
--------------------------------------------------- */
 
 /* Width/height of slider */
 .slider,
