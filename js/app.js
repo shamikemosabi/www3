@@ -69,6 +69,12 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		
 	// load default audio:
 	// if null then default
+	if($scope.$storage.clearDate==null)
+	{
+		var d = new Date(0);
+		$scope.$storage.clearDate = d.getTime();
+	}
+	
 	if ($scope.$storage.currentSound==null){$scope.$storage.currentSound = 'default.mp3'; }
 	if ($scope.$storage.currVol==null){$scope.$storage.currVol = .5 ; }
 	
@@ -128,7 +134,9 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 				{
 					//console.log("false");
 					//set old storage with new
-					$scope.$storage.oldNames  = $scope.$storage.newNames
+					//$scope.$storage.oldNames  = $scope.$storage.newNames
+					$scope.replaceObj($scope.$storage.oldNames,  $scope.$storage.newNames);
+					
 					//set local full storage
 					$scope.$storage.fullData = $scope.$storage.newNames.records.concat($scope.$storage.fullData )											
 					
@@ -151,9 +159,8 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 						
 					}
 				}
-				
 				$scope.cleanNull();
-				
+				$scope.loadLikes();
 			});		
 		
 		if($scope.$storage.oldNames!=null)
@@ -175,6 +182,24 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 			});
 		}	
 	};
+	
+	
+	$scope.replaceObj  = function(oldObj, newObj)
+	{
+		//	var oldObj = [];
+		$scope.$storage.oldNames = new Object();
+		$scope.$storage.oldNames.records = [];
+		
+		for (var i=0; i<newObj.records.length; i++) {
+			var v = newObj.records[i];
+			var v1 = {Post:v.Post, link:v.link}; // data is referenced so if I changed newName oldName gets changed too automaticall.. so i need to create new obj
+			$scope.$storage.oldNames.records.push(v1);
+		}
+		$scope.$storage.oldNames.date = newObj.date;
+		
+		//return oldObj;
+	}
+	
 	
 	
 	$scope.open = function (title, link) {
@@ -207,7 +232,8 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	}
 	
 	
-	$scope.loadLikes = function(obj, o){
+	
+	$scope.getLikes = function(o){
 		var ret = 0;
 		var id = stripForID(o);
 		
@@ -215,10 +241,20 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		if(rec!=null){		
 			ret = rec.value;
 		}
-		
-		obj.value = ret;
+
 		return ret;
 	}
+	
+	$scope.loadLikes = function(){
+		if($scope.$storage.fullData!=null)
+		{
+			for (var i=0; i<$scope.$storage.fullData.length; i++) {
+				var v = $scope.getLikes($scope.$storage.fullData[i].link);
+				$scope.$storage.fullData[i].likes = v;
+			}
+		}
+	}
+	
 	
 	$scope.updateHit = function (obj, link, bool){
 
@@ -274,20 +310,24 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 
 //chat
 	
-		$scope.loadChat = function (){
+	$scope.loadChat = function (){
 
 		var ret = "";
+		 
 		 
 			for( j = 0; j <$scope.chat.length; j ++ )
 			{
 				value = $scope.chat[j];
+				
 				if( $scope.displayChat == null)
 				{
-					 $scope.displayChat = []; //create empty object 
+				//	 $scope.displayChat = []; //create empty object 
+				$scope.displayChat = ""; //create empty object 
 				}
 				
 				var bool=true;
 				
+				/* nested for loop bad n^n
 				for( i = 0 ; i< $scope.displayChat.length ; i ++)
 				{
 					var blah = $scope.displayChat[i];
@@ -297,22 +337,26 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 						break;
 					}
 				}
-				if(bool)
+				*/
+				
+				if(value.date >  $scope.$storage.clearDate)
 				{
-					 $scope.displayChat.push(value);
-					
+					var date = new Date(value.date);
+
+					//$scope.displayChat.push(value);
+					ret += date.toLocaleString() + "\n" +value.user + " : " + value.msg + "\n\n";
 				}
 			
 			}
 			
-			
+			/*
 			angular.forEach($scope.displayChat,function(value,index){			
 				ret += "- " + value.msg + "\n";
 			});
+			*/
 			
-			
-		
-		return ret;
+			$scope.displayChat = ret;
+		//return ret;
 	}	 
 		
 	 
@@ -326,23 +370,30 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	
 	$scope.send = function(){
 		
-	
 		if($scope.txtchat == null || $scope.txtchat == "")
 		{ 
 			return false; 
 		}
-		
+		var d = new Date();
 		 $scope.chat.$add({
-             msg: $scope.txtchat
+             msg: $scope.txtchat,
+			  date: d.getTime(),
+			  browser: navigator.userAgent,
+			  user: $scope.txtNickname
           });
 		  
 		  $scope.txtchat = "";
 	}
 	
 	$scope.addMessage = function(e) {
+
 		if (e.keyCode === 13 && $scope.txtchat) {
+			var d = new Date();
 			 $scope.chat.$add({
-             msg: $scope.txtchat
+             msg: $scope.txtchat,
+			 date: d.getTime(),
+			 browser: navigator.userAgent,
+			 user: $scope.txtNickname
           });
 		  
 		  $scope.txtchat = "";
@@ -352,24 +403,26 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	
 	$scope.clearChat = function()
 	{
+			
+	 $scope.displayChat = "";
+ 	 var d = new Date();
+	 $scope.$storage.clearDate = d.getTime();
 		
-		 
-		 
+		/*
 		  var obj = $firebaseObject(ref2);
 			obj.$remove().then(function(ref) {
 			    $scope.displayChat = [];
 			}, function(error) {
 			  console.log("Error:", error);
 			});
+		*/
 			
 	}
 	
 //chat	
 	
 			
-			
 
-	
 	$scope.renderHtml = function(html_code) {
 		return $sce.trustAsHtml(html_code);
 	};
@@ -385,7 +438,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	$scope.intervalFunction = function(){
 		$timeout(function() {
 			$scope.getData();
-			
+			$scope.loadChat();
 			$scope.intervalFunction();
 		}, 5000)
 	};
