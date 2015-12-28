@@ -38,7 +38,7 @@
 				<button style="border: none;  padding: 0; background: none;" class="fa fa-arrow-circle-up fa-2x like1 " ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'up', false:''}[buttonDisable==true]"></button>					
 					</br>
 
-						&nbsp;<span class="num" ng-class="{up: {{x.likes}}>=1, down: {{x.likes}} < 0 , }">  {{x.likes}}</span>
+						&nbsp;<span class="num" ng-class="{up: x.likes>=1, down: x.likes < 0 , }">  {{x.likes}}</span>
 					</br>
 				<button style="border: none;  padding: 0; background: none;" class="fa fa-arrow-circle-down fa-2x dislike1" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'down', false:''}[buttonDisable==false]"></button>	
 				</br>
