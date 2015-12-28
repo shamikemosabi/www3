@@ -154,12 +154,13 @@
 	    display: block;
 	    width: 20%;
 		height:82%;
-		  overflow: scroll;
 }
 
 .chatDisplay {
 	height:78%;
 	 resize: none;
+	 overflow: scroll;
+	 overflow-x: hidden;
 }
 
 .plus{

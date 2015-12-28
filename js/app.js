@@ -44,6 +44,10 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		 var ref2 = new Firebase("https://amber-fire-5449.firebaseio.com/chat/");
 		 $scope.chat = $firebaseArray(ref2);
 		 
+		 //LOCAL
+		// var ref3 = new Firebase("https://amber-fire-5449.firebaseio.com/chat2/");
+		 //$scope.chat2 = $firebaseArray(ref3);
+		 
 	
 
 	 //firebase
@@ -218,6 +222,15 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 			},
 			ref: function(){
 				return ref;
+			},
+			chat: function(){
+				return $scope.chat; 
+			},
+			nickName: function(){
+				return $scope.txtNickname;
+			},
+			linkRaw: function(){
+				return link;
 			}
 			
 		}
@@ -344,7 +357,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 					var date = new Date(value.date);
 
 					//$scope.displayChat.push(value);
-					ret += date.toLocaleString() + "\n" +value.user + " : " + value.msg + "\n\n";
+					ret += date.toLocaleString() + "</br>" +value.user + " : " + value.msg + "</br>" + "_________________________________</br>";
 				}
 			
 			}
@@ -472,15 +485,40 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 
 
 app.controller('PopupInstanceController',
-	['$scope','$uibModalInstance', 'title', 'list', 'link', '$sce', 'ref' , '$firebaseArray',
-		function ($scope, $uibModalInstance, title, list, link, $sce, ref,  $firebaseArray) {								 
-			$scope.title = $sce.trustAsHtml(title);
+	['$scope','$uibModalInstance', 'title', 'list', 'link', '$sce', 'ref' , '$firebaseArray', 'chat', 'nickName', 'linkRaw',
+		function ($scope, $uibModalInstance, title, list, link, $sce, ref,  $firebaseArray, chat, nickName, linkRaw) {
+			$scope.title = title;
 			$scope.list  = list
 			$scope.ref   = ref
 			$scope.link  = link // is actually ID
+			$scope.chat = chat
+			$scope.nickName = (nickName == null ? "" : nickName);	
+			$scope.linkRaw = linkRaw
+			
 			$scope.close = function () {
 			$uibModalInstance.dismiss('cancel');
 			};
+			
+			
+			$scope.sendToChat = function(){
+				if($scope.txtcomment == null || $scope.txtcomment == "")
+				{ 
+					return false; 
+				}
+				var d = new Date();
+				
+				var string = "<font size=1>" + $scope.title  + "</font>" + " </br> " + $scope.txtcomment;
+				
+				$scope.chat.$add({
+					  msg: string,
+					  date: d.getTime(),
+					  browser: navigator.userAgent,
+					  user: $scope.nickName
+				 });
+		  		  			
+				$scope.save();		
+				$scope.CD = string;
+			}
 			
 			$scope.save = function(){
 				
@@ -517,6 +555,11 @@ app.controller('PopupInstanceController',
 						
 			};
 			
+			
+			$scope.renderHtml = function(html_code) {
+				return $sce.trustAsHtml(html_code);
+			};
+	
 			// loads comment	
 			 var ret = ""; 
 		     var rec = list.$getRecord($scope.link);

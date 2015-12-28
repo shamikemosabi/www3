@@ -1,5 +1,5 @@
 <div class="modal-header">
-<h4 class="modal-title"><div ng-bind-html="title" ></div></h4>
+<h4 class="modal-title"><div ng-bind-html="renderHtml(title)" ></div></h4>
 
 </div>
 <div class="modal-body">
@@ -12,13 +12,23 @@
  <li> {{placeholder}} </li>
 </ul>
 	
+	<!--
+	</br>
+  <div ng-bind-html="renderHtml(CD)"     
+         ng-model="CD">
+   </div>	
+		-->
+	
 
 </br>
  <textarea ng-model="txtcomment" placeholder="Post Your Time or Comment"></textarea>
 </div>
 <div class="modal-footer">
 <button class="btn btn-info" type="button"
-ng-click="save()">Save</button>
+ng-click="save()">Send</button>
+
+<button class="btn btn-success" type="button"
+ng-click="sendToChat()">Send to Chat</button>
 
 <button class="btn btn-warning" type="button"
 ng-click="close()">Cancel</button>
