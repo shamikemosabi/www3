@@ -357,7 +357,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 					var date = new Date(value.date);
 
 					//$scope.displayChat.push(value);
-					ret += date.toLocaleString() + "</br>" +value.user + " : " + value.msg + "</br>" + "_________________________________</br>";
+					ret += "<b>" + date.toLocaleString() + "</br>" +value.user + "</b> : " + value.msg + "</br>" + "</br>";
 				}
 			
 			}
