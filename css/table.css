@@ -154,6 +154,7 @@
 	    display: block;
 	    width: 20%;
 		height:82%;
+		overflow: auto;
 }
 
 .chatDisplay {
@@ -165,11 +166,15 @@
 
 .plus{
  position: absolute;
-  top: 21%;
+  top: 27%;
   right: 80%;
   padding: 6px 12px;
   font: 24px/1.25 "Helvetica Neue", sans-serif;
 	color:black;
+	
+	border: none; 
+
+	background: none;
 }
 
 .pay input {
