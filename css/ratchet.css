@@ -136,6 +136,12 @@ a {
   -webkit-overflow-scrolling: touch;
 }
 
+.content.toggleChat {
+  left: 0;
+
+}
+
+
 /* Hack to force all relatively and absolutely positioned elements still render while scrolling
    Note: This is a bug for "-webkit-overflow-scrolling: touch" */
 .content > * {

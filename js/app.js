@@ -109,6 +109,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	
 // end sound
 
+$scope.toggle = 1
 		
 	
 	// fetch new data
@@ -430,6 +431,12 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 			});
 		*/
 			
+	}
+	
+	$scope.toggleChat = function()
+	{
+
+		$scope.toggle = $scope.toggle * -1;
 	}
 	
 //chat	

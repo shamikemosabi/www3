@@ -22,7 +22,7 @@
     </ul>
   </nav>
 
- <div class="content"> 
+ <div ng-class="{'content': toggle>0, 'content toggleChat': toggle < 0, } "> 
 <div id="sound"></div>
 
     <ul class="list">
@@ -55,9 +55,13 @@
 	</ul>
 		 
 	<br><br>
+	
+
 </div>
 
-<div class = "chat" >
+ <button class="chatToggle fa fa-comments fa-2x " data-toggle="collapse" data-target="#chat" ng-click ="toggleChat()"></button>
+
+	<div class = "collapse in width chat" id = 'chat' >
 
 		<!-- <textarea readonly class="chatDisplay " ng-model="displayChat"> </textarea> -->
 		<div ng-bind-html="renderHtml(displayChat)" class="chatDisplay " ng-model="displayChat"></div>	

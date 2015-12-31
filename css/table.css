@@ -156,6 +156,21 @@
 		height:82%;
 		overflow: auto;
 }
+.collapse.width {
+    height: 82%;
+    -webkit-transition: width 0.35s ease;
+    -moz-transition: width 0.35s ease;
+    -o-transition: width 0.35s ease;
+    transition: width 0.35s ease;
+}
+
+.chatToggle{
+	top: 7%;
+	position: fixed;
+	border: none;
+	background: none;
+	z-index: 1000;
+} 
 
 .chatDisplay {
 	height:78%;
@@ -178,7 +193,6 @@
 }
 
 .pay input {
-   z-index: 1000; position:relative;
    z-index: 1000; position:relative;
 	left: 95%;
 	left: 94%;
