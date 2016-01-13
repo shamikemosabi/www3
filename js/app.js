@@ -40,14 +40,14 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		var ref = new Firebase("https://amber-fire-5449.firebaseio.com/");
 		var list = $firebaseArray(ref);
 		
+		var hitList = $firebaseArray(ref.child("hits"));
 		
-		 var ref2 = new Firebase("https://amber-fire-5449.firebaseio.com/chat/");
-		 $scope.chat = $firebaseArray(ref2);
+		
+		// var ref2 = new Firebase("https://amber-fire-5449.firebaseio.com/chat/");
+		$scope.chat = $firebaseArray(ref.child("chat")); //local
 		 
-		 //LOCAL
-		// var ref3 = new Firebase("https://amber-fire-5449.firebaseio.com/chat2/");
-		 //$scope.chat2 = $firebaseArray(ref3);
-		 
+		var loginList = $firebaseArray(ref.child("u"));
+	
 	
 
 	 //firebase
@@ -69,7 +69,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 					clearInterval(this.Vars.Interval);
 					document.title = this.Vars.OriginalTitle;   
 				}
-	}
+	};
 		
 	// load default audio:
 	// if null then default
@@ -93,19 +93,19 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		   $scope.audio = ngAudio.load('sound/'+$scope.$storage.currentSound);
 		  
 		   $scope.audio.play();
-	}
+	};
 	
 	$scope.playSound = function()
 	{
 		$scope.audio.play();
-	}
+	};
 	
 	$scope.saveSlider = function(v)
 	{
 		
 		$scope.$storage.currVol = v;
 		$scope.audio.volume = $scope.$storage.currVol;
-	}
+	};
 	
 // end sound
 
@@ -203,7 +203,7 @@ $scope.toggle = 1
 		$scope.$storage.oldNames.date = newObj.date;
 		
 		//return oldObj;
-	}
+	};
 	
 	
 	
@@ -215,8 +215,8 @@ $scope.toggle = 1
 			title: function () {
 				return title;
 			},
-			list: function (){
-			    return list;
+			hitList: function (){
+			    return hitList;
 			},
 			link: function(){
 				return stripForID(link);
@@ -232,18 +232,25 @@ $scope.toggle = 1
 			},
 			linkRaw: function(){
 				return link;
+			},
+			loginList: function(){
+				return loginList;
 			}
 			
 		}
 		});
-		}
+		};
 
 	function stripForID(str){
 		var id = str.replace("https://www.mturk.com/mturk/", ""); 
 		id = id.replace(".", "");  // cant store . as keys
 		id = id.replace("#", "");  // cant store # as keys
+		id = id.replace("$", "");
+		id = id.replace("[", "");
+		id = id.replace("]", "");
+		id = id.replace("/", "");
 		return id;
-	}
+	};
 	
 	
 	
@@ -251,13 +258,13 @@ $scope.toggle = 1
 		var ret = 0;
 		var id = stripForID(o);
 		
-		var rec = list.$getRecord(id);
+		var rec = hitList.$getRecord(id);
 		if(rec!=null){		
 			ret = rec.value;
 		}
 
 		return ret;
-	}
+	};
 	
 	$scope.loadLikes = function(){
 		if($scope.$storage.fullData!=null)
@@ -267,17 +274,17 @@ $scope.toggle = 1
 				$scope.$storage.fullData[i].likes = v;
 			}
 		}
-	}
+	};
 	
 	
 	$scope.updateHit = function (obj, link, bool){
 
 		var id = stripForID(link);
 		
-		var rec = list.$getRecord(id);
+		var rec = hitList.$getRecord(id);
 		if(rec==null) // if doesn't exist we add
 		{
-			var child = ref.child(id); 
+			var child = ref.child("hits").child(id); 
 			var num = 0;
 			if(bool==true)
 			{
@@ -295,12 +302,12 @@ $scope.toggle = 1
 		}
 		else{// it exists upvote, or downvote
 			
-			var index = list.$indexFor(id);
+			var index = hitList.$indexFor(id);
 			if(bool==true)//upvote
 			{	
 				var v = rec.value+1; //make sure to not be 0 after updating it.
 				if(v == 0){ v = 1;}
-				list[index].value = v;
+				hitList[index].value = v;
 				obj.buttonDisable = true;
 				
 			}
@@ -308,17 +315,17 @@ $scope.toggle = 1
 			{
 				var v = rec.value-1;
 				if(v == 0){ v = -1;}
-				list[index].value = v;
+				hitList[index].value = v;
 				obj.buttonDisable = false;
 			}
 				
-			list.$save(index).then(function(ref) {
-			  ref.key() === list[index].$id; 
+			hitList.$save(index).then(function(ref) {
+			  ref.key() === hitList[index].$id; 
 			});
 			
 		}
 
-	}
+	};
 	
 	
 
@@ -358,7 +365,7 @@ $scope.toggle = 1
 					var date = new Date(value.date);
 
 					//$scope.displayChat.push(value);
-					ret += "<b>" + date.toLocaleString() + "</br>" +value.user + "</b> : " + value.msg + "</br>" + "</br>";
+					ret += "<b>" + date.toLocaleString() + "</br>" + getDutyColor(value.user)+ "</b> : " + value.msg + "</br>" + "</br>";
 				}
 			
 			}
@@ -371,7 +378,73 @@ $scope.toggle = 1
 			
 			$scope.displayChat = ret;
 		//return ret;
-	}	 
+	};
+
+	function getDutyColor(user)
+	{
+		var ret="";
+		var rec = loginList.$getRecord(user.toLowerCase());
+		
+		if(rec==null)
+		{
+			ret = user;
+		}
+		else{
+			var cmts = rec.cmts;
+			var duty = rec.duty;
+			
+			ret = calculateDuty(cmts,duty,user);
+			
+			if(rec.superUser!=null && rec.superUser ==1)
+			{
+				ret = "<font color='red' >" +user + "</font>";
+			}
+		}
+
+		
+		return ret;
+
+	};	
+	
+	function calculateDuty(cmts,duty, user)
+	{
+		var v = cmts + (duty*5);
+		var ret ="";
+		
+		if(v < 40) //green
+		{
+			ret = "<font color='#006600' >" + user +"</font>";
+		}
+		else if(v < 80) //blue
+		{
+			ret = "<font color='#000099' >" + user +"</font>";
+		}
+		else if(v < 120)//purple
+		{
+			ret = "<font color='#660065' >" + user +"</font>";
+		}	
+		else if(v < 200)//orange
+		{
+			ret = "<font color='#ff6600' >" + user +"</font>";
+			
+		}		
+		else if(v < 300)//light blue
+		{
+			ret = "<font color='#4db6ff' >" + user +"</font>";
+		}
+		else if(v < 450) //pink
+		{
+			ret = "<font color='#ff66cc' >" + user +"</font>";
+		}	
+		else //if(v < 600) //yellow
+		{
+			ret = "<font color='#e5e600' >" + user +"</font>";
+		}	
+		
+		return ret;
+		
+	};
+	
 		
 	 
 	 /*
@@ -382,38 +455,81 @@ $scope.toggle = 1
 	}
 	*/
 	
+	function getUserName()
+	{
+		var  user;
+		var authData = ref.getAuth();
+		if(authData)
+		{
+			user = authData.password.email
+			
+			ref.child('u').orderByChild('email').equalTo(user).on("child_added", function(snapshot, prevChildKey) {
+				var obj = snapshot.val();
+				user =  obj.user
+			});	
+		}
+		else{
+			user = "Anonymous";
+		}
+		
+		return user;
+	};
+	
 	$scope.send = function(){
 		
 		if($scope.txtchat == null || $scope.txtchat == "")
 		{ 
 			return false; 
 		}
+		var user = getUserName();
 		var d = new Date();
 		 $scope.chat.$add({
              msg: $scope.txtchat,
 			  date: d.getTime(),
 			  browser: navigator.userAgent,
-			  user: $scope.txtNickname
+			  user: user
           });
-		  
+		  incCmt(user);
 		  $scope.txtchat = "";
-	}
+	};
 	
 	$scope.addMessage = function(e) {
 
 		if (e.keyCode === 13 && $scope.txtchat) {
+			var user = getUserName();
 			var d = new Date();
 			 $scope.chat.$add({
              msg: $scope.txtchat,
 			 date: d.getTime(),
 			 browser: navigator.userAgent,
-			 user: $scope.txtNickname
+			 user: user
           });
 		  
+		  incCmt(user);
 		  $scope.txtchat = "";
 		}
 	
-	}
+	};
+	
+	function incCmt(user)
+	{
+		var ret="";
+		var rec = loginList.$getRecord(user.toLowerCase());
+		
+		if(rec!=null){
+			
+			var cmts = rec.cmts + 1;
+			
+			var index = loginList.$indexFor(user.toLowerCase());
+			
+			loginList[index].cmts = cmts;
+
+			loginList.$save(index).then(function(ref) {
+			  ref.key() === loginList[index].$id; 
+			});
+		}
+	};
+	
 	
 	$scope.clearChat = function()
 	{
@@ -431,13 +547,12 @@ $scope.toggle = 1
 			});
 		*/
 			
-	}
+	};
 	
 	$scope.toggleChat = function()
 	{
-
 		$scope.toggle = $scope.toggle * -1;
-	}
+	};
 	
 //chat	
 	
@@ -475,7 +590,7 @@ $scope.toggle = 1
 		
 		$scope.names = "";
 		PageTitleNotification.Off();
-	}
+	};
 	
 	//Change title back after getting focus
 	window.addEventListener("focus", function(event) {  
@@ -485,17 +600,286 @@ $scope.toggle = 1
 		}, false);
 		
 		
+	
+	// login
+	$scope.loginErrMsg = "";
+	$scope.loginSuccMsg="";
+	$scope.currentLoginUserName=getUserName(); //only used as display
+	$scope.loggedIn = ref.getAuth();
+	//pane
+	$scope.singInPane = true;
+	$scope.forgotPwPane = false;
+	$scope.changePwPane = false;
+	
+	$scope.btnLogin = function(){
 		
+		logInto($scope.loginEmail,$scope.loginPassword)
+	};
+
+	$scope.btnRegistry = function(){
+		
+		//first check if handle exists:
+		if (!checkIfUserExists($scope.loginUsername))
+		{
+			createUser($scope.loginEmail, $scope.loginPassword, $scope.loginUsername);
+		}
+		else{
+			$scope.loginErrMsg = "User Name is already taken, or invalid characters in User Name";		
+			$scope.loginSuccMsg="";			
+		}
+		
+	};
+	
+	function createUser(login, password, user){
+
+			ref.createUser({
+			  email    : login,
+			  password : password
+			}, function(error) {
+			  if (error) {
+				 var msg;
+				 switch(error.code)
+				 {
+					 case 'EMAIL_TAKEN':
+						msg = "This email is already registered";
+						break;
+					 case 'INVALID_EMAIL':	
+						msg ="Email is invalid";
+						break;
+					 default:
+						msg = error.code;
+				 }				 
+				$scope.loginErrMsg = msg;
+				$scope.loginSuccMsg ="";
+				
+				
+			  } else { //success
+				$scope.loginSuccMsg = "Account created successfully.";
+				$scope.loginErrMsg = "";
+				
+				logInto(login,password);
+				AddUserToDB(user,login);
+				
+			  }
+			});
+			
+		
+	};
+	
+	
+	function AddUserToDB (user,login){
+		ref.onAuth(function(authData) {
+		  if (authData) {
+			 var d = new Date(); 
+			var c = ref.child("u").child(user.toLowerCase());
+			var zero =0;
+			
+			c.set({
+			  provider: authData.provider,
+			  cmts: zero,
+			  duty: zero,
+			  email:login,
+			  dateCreated: d.getTime(),
+			  lastLogin: d.getTime(),
+			  user: user,
+			  superUser: zero
+			});
+		
+		  }
+		});
+		
+	};
+	
+	
+	$scope.logOut = function(){
+		 ref.unauth();
+		 $scope.loggedIn = false;
+		 $scope.loginErrMsg = "";
+		$scope.loginSuccMsg="";
+		$scope.currentLoginUserName="";
+	};
+	
+	function logInto(login, password){
+			ref.authWithPassword({
+					  email    :login,
+					  password : password
+					}, function(error, authData) {
+					  if (error) {
+						var msg;
+						switch(error.code)
+						{
+						 case 'EMAIL_TAKEN':
+							msg = "This email is already registered";
+							break;
+						 case 'INVALID_EMAIL':	
+							msg ="Email is invalid";
+							break;
+						 case 'INVALID_PASSWORD':
+							msg = "Password is invalid";
+							break;
+						case 'INVALID_USER':
+							msg="Email does not exist";
+							break;
+						 default:
+							msg = error.code;
+						 }
+						$scope.loginErrMsg = msg;
+						$scope.loginSuccMsg ="";
+						 
+					  } else {
+						 $scope.loginSuccMsg = $scope.loginSuccMsg + " Logged in successfully";
+						 $scope.loginErrMsg = "";
+						 $scope.loggedIn= true;
+						 var u = getUserName();
+						 $scope.currentLoginUserName = u;
+						 updateLastLogin(u);
+					  }
+					});	
+	};
+	
+	
+	function updateLastLogin(user)
+	{
+		var ret="";
+		var rec = loginList.$getRecord(user.toLowerCase());
+
+		if(rec!=null){
+			var d = new Date();
+			var index = loginList.$indexFor(user.toLowerCase());
+			
+			loginList[index].lastLogin = d.getTime();
+
+			loginList.$save(index).then(function(ref) {
+			  ref.key() === loginList[index].$id; 
+			});
+		}
+	};
+	
+	
+	function checkIfUserExists(userId) {
+		var  ret =true;
+		 
+		 var rec = loginList.$getRecord(userId.toLowerCase());
+		
+		if(rec==null)
+		{
+			ret  = false;
+		}
+		
+		if((userId.indexOf(".") > -1) || (userId.indexOf("$") > -1) || (userId.indexOf("[") > -1) || (userId.indexOf("]") > -1) || (userId.indexOf("#") > -1) || (userId.indexOf("/") > -1)) {
+			
+			ret = true;
+		}
+				
+		return ret;
+
+	};
+	
+	
+	$scope.toggleForgotPW = function(){	
+		$scope.forgotPwPane = true;
+		$scope.singInPane = false;
+		$scope.loginErrMsg = "";
+		$scope.loginSuccMsg="";
+		$scope.changePwPane = false;
+	};
+	
+	$scope.toggleSignIn = function(){	
+		$scope.forgotPwPane = false;
+		$scope.singInPane = true;
+		$scope.loginErrMsg = "";
+		$scope.loginSuccMsg="";	
+		$scope.changePwPane = false;
+	};	
+	
+	$scope.toggleChangePW = function(){
+		$scope.forgotPwPane = false;
+		$scope.singInPane = false;
+		$scope.loginErrMsg = "";
+		$scope.loginSuccMsg="";	
+		$scope.changePwPane = true;
+	};
+	
+	$scope.sendForgotPW = function(){
+		ref.resetPassword({
+		  email : $scope.forgotPwEmail
+		}, function(error) {
+		  if (error) {
+				 var msg;
+				 switch(error.code)
+				 {
+					 case 'EMAIL_TAKEN':
+						msg = "This email is already registered";
+						break;
+					case 'INVALID_EMAIL':	
+						msg ="Email is invalid";
+						break;
+					 case 'INVALID_PASSWORD':
+						msg = "Password is invalid";
+						break;
+					case 'INVALID_USER':
+						msg="Email does not exist";
+						break;
+					 default:
+						msg = error.code;
+				 }				 
+				$scope.loginErrMsg = msg;
+				$scope.loginSuccMsg ="";
+				
+				
+		  } else {
+			$scope.loginSuccMsg = "Password reset email sent successfully";
+			$scope.loginErrMsg = "";
+		  }
+		});
+	}
+
+	$scope.sendChangePW = function(){	
+		ref.changePassword({
+		  email       : $scope.changePwEmail,
+		  oldPassword : $scope.changePwOld,
+		  newPassword : $scope.changePwNew
+		}, function(error) {
+		  if (error) {
+			 var msg;
+			 switch(error.code){
+				case 'EMAIL_TAKEN':
+					msg = "This email is already registered";
+					break;
+				case 'INVALID_EMAIL':	
+					msg ="Email is invalid";
+					break;
+				case 'INVALID_PASSWORD':
+					msg = "Password is invalid";
+					break;
+				case 'INVALID_USER':
+					msg="Email does not exist";
+					break;
+				default:
+					msg = error.code;
+			}				 
+			$scope.loginErrMsg = msg;
+			$scope.loginSuccMsg ="";
+			
+		  } else {	  
+			$scope.loginSuccMsg = "Password changed successfully";
+			$scope.loginErrMsg = "";
+			
+		  }
+		});
+	};
+	
+	//login	
 
 
 });
 
 
 app.controller('PopupInstanceController',
-	['$scope','$uibModalInstance', 'title', 'list', 'link', '$sce', 'ref' , '$firebaseArray', 'chat', 'nickName', 'linkRaw',
-		function ($scope, $uibModalInstance, title, list, link, $sce, ref,  $firebaseArray, chat, nickName, linkRaw) {
+	['$scope','$uibModalInstance', 'title', 'hitList', 'link', '$sce', 'ref' , '$firebaseArray', 'chat', 'nickName', 'linkRaw', 'loginList',
+		function ($scope, $uibModalInstance, title, hitList, link, $sce, ref,  $firebaseArray, chat, nickName, linkRaw,loginList) {
 			$scope.title = title;
-			$scope.list  = list
+			$scope.hitList  = hitList
 			$scope.ref   = ref
 			$scope.link  = link // is actually ID
 			$scope.chat = chat
@@ -513,6 +897,7 @@ app.controller('PopupInstanceController',
 					return false; 
 				}
 				var d = new Date();
+				var u = getUserName();
 				
 				var string = "<font size=1>" + $scope.title  + "</font>" + " </br> " + $scope.txtcomment;
 				
@@ -520,12 +905,12 @@ app.controller('PopupInstanceController',
 					  msg: string,
 					  date: d.getTime(),
 					  browser: navigator.userAgent,
-					  user: $scope.nickName
+					  user: u
 				 });
 		  		  			
 				$scope.save();		
 				$scope.CD = string;
-			}
+			};
 			
 			$scope.save = function(){
 				
@@ -534,7 +919,7 @@ app.controller('PopupInstanceController',
 					return false; 
 				}
 				
-				var rec = list.$getRecord($scope.link);
+				var rec = hitList.$getRecord($scope.link);
 				//making comment without voting first
 				if(rec==null) {
 
@@ -543,16 +928,18 @@ app.controller('PopupInstanceController',
 						value: 0		
 					}
 					
-					ref.child(uniqueId.id).set(uniqueId);
-					ref.child(uniqueId.id).child('comments').push({body: $scope.txtcomment});
+					ref.child("hits").child(uniqueId.id).set(uniqueId);
+					ref.child("hits").child(uniqueId.id).child('comments').push({body: $scope.txtcomment});
 				}
 				else{ // we already have this in db just need to add comment
 					
-					ref.child($scope.link).child('comments').push({body: $scope.txtcomment});
+					ref.child("hits").child($scope.link).child('comments').push({body: $scope.txtcomment});
 					
 				}
+				var u = getUserName();
+				incDuty(u);
 			
-				var recAgain = list.$getRecord($scope.link);
+				var recAgain = hitList.$getRecord($scope.link);
 				
 				if(recAgain!=null) $scope.comments = recAgain.comments;
 				
@@ -562,6 +949,46 @@ app.controller('PopupInstanceController',
 						
 			};
 			
+			function incDuty(user)
+			{
+				var ret="";
+				var rec = loginList.$getRecord(user.toLowerCase());
+				
+				if(rec!=null){
+					
+					var duty = rec.duty + 1;
+					
+					var index = loginList.$indexFor(user.toLowerCase());
+					
+					loginList[index].duty = duty;
+
+					loginList.$save(index).then(function(ref) {
+					  ref.key() === loginList[index].$id; 
+					});
+				}
+			};
+			
+			function getUserName()
+			{
+				var  user;
+				var authData = ref.getAuth();
+				if(authData)
+				{
+					user = authData.password.email
+					
+					ref.child('u').orderByChild('email').equalTo(user).on("child_added", function(snapshot, prevChildKey) {
+						var obj = snapshot.val();
+						user =  obj.user
+					});	
+				}
+				else{
+					user = "Anonymous";
+				}
+				
+				return user;
+			};
+	
+			
 			
 			$scope.renderHtml = function(html_code) {
 				return $sce.trustAsHtml(html_code);
@@ -569,7 +996,7 @@ app.controller('PopupInstanceController',
 	
 			// loads comment	
 			 var ret = ""; 
-		     var rec = list.$getRecord($scope.link);
+		     var rec = hitList.$getRecord($scope.link);
 			 if(rec!=null){		
 		     	ret = rec.comments;
 			 }

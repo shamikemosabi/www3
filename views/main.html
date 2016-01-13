@@ -67,7 +67,7 @@
 		<div ng-bind-html="renderHtml(displayChat)" class="chatDisplay " ng-model="displayChat"></div>	
 				
 		<div >
-			<input ng-model="txtNickname" type="text" placeholder="Nickname..."> 
+			<!-- <input ng-model="txtNickname" type="text" placeholder="Nickname..."> -->
 			<input ng-model="txtchat" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message..."> 
 			<button class="btn btn-info" type="button" ng-click="send()">Send</button>
 			<button class="btn btn-warning" type="button" ng-click="clearChat()">Clear Chat</button>
