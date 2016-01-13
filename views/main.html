@@ -1,87 +1,243 @@
-  <nav class="bar-standard bar-header-secondary">
-	 <div class="tab-item2" > Last updated on {{date}}  </div>
-  </nav>
-  
-     <nav class="bar-tab">
-    <ul class="tab-inner">
-	<li class="tab-item">
-	 <button class="button-negative " ng-click ="reset()">Clear All</button>
-	 </li>
-      <li class="tab-item">
-        <a href="#/about">
-          <img class="tab-icon" src="img/icon-profile.png">
-          <div class="tab-label">About Me</div>
-        </a>
-      </li>
-		<li class="tab-item">
-        <a href="#/setting">
-          <img class="tab-icon" src="img/icon-settings.png">
-          <div class="tab-label">Setting</div>
-        </a>
-      </li>	  
-    </ul>
-  </nav>
+<!DOCTYPE HTML>
+<!--
+	Dopetrope by HTML5 UP
+	html5up.net | @n33co
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
 
- <div ng-class="{'content': toggle>0, 'content toggleChat': toggle < 0, } "> 
-<div id="sound"></div>
 
-    <ul class="list">
-		<li class="list-divider" ng-repeat="x in $storage.fullData">	
-			<div class ="blah">			
-				<div ng-bind-html="renderHtml(x.Post)" ></div>				
-				<button class ="button-negative" ng-click="delete($index)">X</button>
-				<a href="{{x.link}}" target="_blank">
-					<button class ="button-main MG" ng-click="delete($index)">PandA</button>
-				</a>
-			
-				<div class="vote">
-				<button style="border: none;  padding: 0; background: none;" class="fa fa-thumbs-o-up  fa-2x " ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'up', false:''}[buttonDisable==true]"></button>					
-					</br>
 
-						&nbsp;<span class="num" ng-class="{up: x.likes>=1, down: x.likes < 0 , }">  {{x.likes}}</span>
-					</br>
-				<button style="border: none;  padding: 0; background: none;" class="fa fa-thumbs-o-down fa-2x" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'down', false:''}[buttonDisable==false]"></button>	
-				</br>
-				&nbsp;&nbsp;<button ng-click="open(x.Post, x.link)" class="fa fa-pencil-square fa-lg plus"></button>	
-				
-				</div>
-				
-				
-				
-			</div>
-			
-
-		</li>
-	</ul>
-		 
-	<br><br>
+	<head>
+		<title>Mturk Plus</title>		
+	</head>
+	<body>
 	
 
-</div>
+		
+			
+		<div id="page-wrapper">
 
- <button class="chatToggle fa fa-comments fa-2x " data-toggle="collapse" data-target="#chat" ng-click ="toggleChat()"></button>
+			<!-- Header -->
+				<div id="header-wrapper">
+					<div id="header">
 
-	<div class = "collapse in width chat" id = 'chat' >
+						<!-- Logo -->
+							<h1>
+								<font color='lightgray'> 
+									<a href="#/"> Mturk Plus </a>
+								</font>
+							</h1>
 
-		<!-- <textarea readonly class="chatDisplay " ng-model="displayChat"> </textarea> -->
-		<div ng-bind-html="renderHtml(displayChat)" class="chatDisplay " ng-model="displayChat"></div>	
+						<!-- Nav -->
+							<nav id="nav">
+								<ul>
+									<li class="current"><a href="#/">Home</a></li>									
+									<li ><a href="#/setting">setting</a></li>
+							
+								</ul>
+							</nav>
+
+					</div>
+				</div>
+
+			<!-- Main -->
+				<div id="main-wrapper">
+					<div class="container">
+						<div class="row">
+												
+							<div class="4u 12u(mobile)">
+								<!-- Sidebar -->
+									<section class="box">																		
+										<header>
+											<h3>Chat Box</h3>
+										</header>
+										
+										<div >
+											<!-- <textarea readonly class="chatDisplay " ng-model="displayChat"> </textarea> -->
+											<div ng-bind-html="renderHtml(displayChat)" class="chatDisplay " ng-model="displayChat"></div>	
+												
+										</div>
+										
+										<footer>
+											<div >
+												<!-- <input ng-model="txtNickname" type="text" placeholder="Nickname..."> -->
+												<input ng-model="txtchat" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message..."> 
+												<button class="btn btn-info" type="button" ng-click="send()">Send</button>
+												<button class="btn btn-warning" type="button" ng-click="clearChat()">Clear Chat</button>
+											</div>	
+										</footer>
+									</section>
+										
+									<section class="box">	
+
 				
-		<div >
-			<!-- <input ng-model="txtNickname" type="text" placeholder="Nickname..."> -->
-			<input ng-model="txtchat" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message..."> 
-			<button class="btn btn-info" type="button" ng-click="send()">Send</button>
-			<button class="btn btn-warning" type="button" ng-click="clearChat()">Clear Chat</button>
-		</div>	
-</div>
+									</section>
+
+							</div>
+							
+							<div class="8u 12u(mobile) important(mobile)">
+
+								<!-- Content -->
+									<article class="box post">
+										<header class='major'>
+											<button class="button-negative " ng-click ="reset()">Clear All</button></li>	
+										</header>
+										<ul>						
+											<li ng-repeat="x in $storage.fullData">
+												<section class="hitBox">												
+													<div ng-bind-html="renderHtml(x.Post)" ></div>	
+												</section>
+											</li>
+										</ul>
+									</article>
+
+							</div>
+						</div>
+					</div>
+				</div>
+
+				
+				
+			<!-- Footer -->
+				<div id="footer-wrapper">
+					<section id="footer" class="container">
+						<div class="row">
+							<div class="8u 12u(mobile)">
+								<section>
+									<header>
+										<h2>Blandit nisl adipiscing</h2>
+									</header>
+									<ul class="dates">
+										<li>
+											<span class="date">Jan <strong>27</strong></span>
+											<h3><a href="#">Lorem dolor sit amet veroeros</a></h3>
+											<p>Ipsum dolor sit amet veroeros consequat blandit ipsum phasellus lorem consequat etiam.</p>
+										</li>
+										<li>
+											<span class="date">Jan <strong>23</strong></span>
+											<h3><a href="#">Ipsum sed blandit nisl consequat</a></h3>
+											<p>Blandit phasellus lorem ipsum dolor tempor sapien tortor hendrerit adipiscing feugiat lorem.</p>
+										</li>
+										<li>
+											<span class="date">Jan <strong>15</strong></span>
+											<h3><a href="#">Magna tempus lorem feugiat</a></h3>
+											<p>Dolore consequat sed phasellus lorem sed etiam nullam dolor etiam sed amet sit consequat.</p>
+										</li>
+										<li>
+											<span class="date">Jan <strong>12</strong></span>
+											<h3><a href="#">Dolore tempus ipsum feugiat nulla</a></h3>
+											<p>Feugiat lorem dolor sed nullam tempus lorem ipsum dolor sit amet nullam consequat.</p>
+										</li>
+										<li>
+											<span class="date">Jan <strong>10</strong></span>
+											<h3><a href="#">Blandit tempus aliquam?</a></h3>
+											<p>Feugiat sed tempus blandit tempus adipiscing nisl lorem ipsum dolor sit amet dolore.</p>
+										</li>
+									</ul>
+								</section>
+							</div>
+							<div class="4u 12u(mobile)">
+								<section>
+									<header>
+										<h2>What's this all about?</h2>
+									</header>
+									<a href="#" class="image featured"><img src="images/pic10.jpg" alt="" /></a>
+									<p>
+										This is <strong>Dopetrope</strong> a free, fully responsive HTML5 site template by
+										<a href="http://n33.co">AJ</a> for <a href="http://html5up.net/">HTML5 UP</a> It's released for free under
+										the <a href="http://html5up.net/license/">Creative Commons Attribution</a> license so feel free to use it for any personal or commercial project &ndash; just don't forget to credit us!
+									</p>
+									<footer>
+										<a href="#" class="button">Find out more</a>
+									</footer>
+								</section>
+							</div>
+						</div>
+						<div class="row">
+							<div class="4u 12u(mobile)">
+								<section>
+									<header>
+										<h2>Tempus consequat</h2>
+									</header>
+									<ul class="divided">
+										<li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
+										<li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
+										<li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+										<li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
+										<li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
+										<li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="4u 12u(mobile)">
+								<section>
+									<header>
+										<h2>Ipsum et phasellus</h2>
+									</header>
+									<ul class="divided">
+										<li><a href="#">Lorem ipsum dolor sit amet sit veroeros</a></li>
+										<li><a href="#">Sed et blandit consequat sed tlorem blandit</a></li>
+										<li><a href="#">Adipiscing feugiat phasellus sed tempus</a></li>
+										<li><a href="#">Hendrerit tortor vitae mattis tempor sapien</a></li>
+										<li><a href="#">Sem feugiat sapien id suscipit magna felis nec</a></li>
+										<li><a href="#">Elit class aptent taciti sociosqu ad litora</a></li>
+									</ul>
+								</section>
+							</div>
+							<div class="4u 12u(mobile)">
+								<section>
+									<header>
+										<h2>Vitae tempor lorem</h2>
+									</header>
+									<ul class="social">
+										<li><a class="icon fa-facebook" href="#"><span class="label">Facebook</span></a></li>
+										<li><a class="icon fa-twitter" href="#"><span class="label">Twitter</span></a></li>
+										<li><a class="icon fa-dribbble" href="#"><span class="label">Dribbble</span></a></li>
+										<li><a class="icon fa-linkedin" href="#"><span class="label">LinkedIn</span></a></li>
+										<li><a class="icon fa-google-plus" href="#"><span class="label">Google+</span></a></li>
+									</ul>
+									<ul class="contact">
+										<li>
+											<h3>Address</h3>
+											<p>
+												Untitled Incorporated<br />
+												1234 Somewhere Road Suite<br />
+												Nashville, TN 00000-0000
+											</p>
+										</li>
+										<li>
+											<h3>Mail</h3>
+											<p><a href="#">someone@untitled.tld</a></p>
+										</li>
+										<li>
+											<h3>Phone</h3>
+											<p>(800) 000-0000</p>
+										</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+						<div class="row">
+							<div class="12u">
+
+								<!-- Copyright -->
+									<div id="copyright">
+										<ul class="links">
+											<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+										</ul>
+									</div>
+
+							</div>
+						</div>
+					</section>
+				</div>
+
+		</div>
 
 
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-65316499-1', 'auto');
-  ga('send', 'pageview');
 
-</script>
+		
+	</body>
+</html>

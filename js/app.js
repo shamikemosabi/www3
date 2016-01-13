@@ -22,6 +22,8 @@ app.config( ['$routeProvider', function($routeProvider) {
 			templateUrl: 'views/setting.html'
 
 		})
+		
+		
 
 		
 		.otherwise({ redirectTo: '/'});
@@ -70,7 +72,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 					document.title = this.Vars.OriginalTitle;   
 				}
 	};
-		
+
 	// load default audio:
 	// if null then default
 	if($scope.$storage.clearDate==null)

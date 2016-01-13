@@ -103,11 +103,9 @@
 }
 
 .adsbygoogle{
-	position: absolute;
-	top: 10%;
-	right: 0;
-	bottom: 0;
-	left: 80%;
+	position: relative;
+
+	
 }
 
 .botAd{

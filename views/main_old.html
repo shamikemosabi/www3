@@ -1,0 +1,87 @@
+  <nav class="bar-standard bar-header-secondary">
+	 <div class="tab-item2" > Last updated on {{date}}  </div>
+  </nav>
+  
+     <nav class="bar-tab">
+    <ul class="tab-inner">
+	<li class="tab-item">
+	 <button class="button-negative " ng-click ="reset()">Clear All</button>
+	 </li>
+      <li class="tab-item">
+        <a href="#/about">
+          <img class="tab-icon" src="img/icon-profile.png">
+          <div class="tab-label">About Me</div>
+        </a>
+      </li>
+		<li class="tab-item">
+        <a href="#/setting">
+          <img class="tab-icon" src="img/icon-settings.png">
+          <div class="tab-label">Setting</div>
+        </a>
+      </li>	  
+    </ul>
+  </nav>
+
+ <div ng-class="{'content': toggle>0, 'content toggleChat': toggle < 0, } "> 
+<div id="sound"></div>
+
+    <ul class="list">
+		<li class="list-divider" ng-repeat="x in $storage.fullData">	
+			<div class ="blah">			
+				<div ng-bind-html="renderHtml(x.Post)" ></div>				
+				<button class ="button-negative" ng-click="delete($index)">X</button>
+				<a href="{{x.link}}" target="_blank">
+					<button class ="button-main MG" ng-click="delete($index)">PandA</button>
+				</a>
+			
+				<div class="vote">
+				<button style="border: none;  padding: 0; background: none;" class="fa fa-thumbs-o-up  fa-2x " ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'up', false:''}[buttonDisable==true]"></button>					
+					</br>
+
+						&nbsp;<span class="num" ng-class="{up: x.likes>=1, down: x.likes < 0 , }">  {{x.likes}}</span>
+					</br>
+				<button style="border: none;  padding: 0; background: none;" class="fa fa-thumbs-o-down fa-2x" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'down', false:''}[buttonDisable==false]"></button>	
+				</br>
+				&nbsp;&nbsp;<button ng-click="open(x.Post, x.link)" class="fa fa-pencil-square fa-lg plus"></button>	
+				
+				</div>
+				
+				
+				
+			</div>
+			
+
+		</li>
+	</ul>
+		 
+	<br><br>
+	
+
+</div>
+
+ <button class="chatToggle fa fa-comments fa-2x " data-toggle="collapse" data-target="#chat" ng-click ="toggleChat()"></button>
+
+	<div class = "collapse in width chat" id = 'chat' >
+
+		<!-- <textarea readonly class="chatDisplay " ng-model="displayChat"> </textarea> -->
+		<div ng-bind-html="renderHtml(displayChat)" class="chatDisplay " ng-model="displayChat"></div>	
+				
+		<div >
+			<!-- <input ng-model="txtNickname" type="text" placeholder="Nickname..."> -->
+			<input ng-model="txtchat" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message..."> 
+			<button class="btn btn-info" type="button" ng-click="send()">Send</button>
+			<button class="btn btn-warning" type="button" ng-click="clearChat()">Clear Chat</button>
+		</div>	
+</div>
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-65316499-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
