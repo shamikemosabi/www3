@@ -1220,7 +1220,7 @@
 
 	table {
 		width: 100%;
-		font-weight: 500;		
+		font-weight: 580;		
 	}
 
 		table.default {
@@ -1282,7 +1282,8 @@
 	.box {
 		background: #333333 ;
 		font-size: 1em;
-		border-radius: 15px;
+		
+		
 	}
 
 		.box .image.featured {
@@ -1690,6 +1691,7 @@
 	#main-wrapper {
 		position: relative;
 		background: #181818 url("images/bg02.png");
+		border-radius: 15px
 		/*border-bottom: solid 1px #ccc;	*/
 	
 	}
@@ -1818,13 +1820,15 @@
 				
 				.box.post{
 				overflow-y: auto;
-				height:680px;
+				height:690px;
 				}
 				
 				.box.ChatPost{
 				overflow-y: auto;
 				overflow-x: hidden;
 				height:472px;
+				padding: .1em 1em 0em 0;
+				
 				}
 
 				.box.post header {
@@ -2589,7 +2593,7 @@
 	
 	.hitBox{
 		display: block;
-		background : #D3D3D3;
+		background : white;
 		border-radius: 5px;
 		padding: 15px;		
 		margin-bottom: 1em;
@@ -2598,4 +2602,9 @@
 	.ad{
 		display:block;
 		position:relative;
+	}
+	
+	.clearAll{
+		position:absolute;
+		right:0;
 	}
