@@ -34,7 +34,7 @@
 								<ul>
 									<li class="current"><a href="#/">Home</a></li>									
 									<li ><a href="#/setting">setting</a></li>
-							
+							<button class="button-negative " ng-click ="reset()">Clear All</button></li>	
 								</ul>
 							</nav>
 
@@ -48,15 +48,20 @@
 												
 							<div class="4u 12u(mobile)">
 								<!-- Sidebar -->
-									<section class="box">																		
+									<section class="box ">																		
 										<header>
 											<h3>Chat Box</h3>
 										</header>
 										
-										<div >
-											<!-- <textarea readonly class="chatDisplay " ng-model="displayChat"> </textarea> -->
-											<div ng-bind-html="renderHtml(displayChat)" class="chatDisplay " ng-model="displayChat"></div>	
-												
+										<div class="box ChatPost">
+											<ul >						
+												<li ng-repeat="a in displayChat">
+													<section class="hitBox">												
+														<div ng-bind-html="renderHtml(a.msg)" ></div>	
+													</section>
+												</li>
+											</ul>
+						
 										</div>
 										
 										<footer>
@@ -69,10 +74,7 @@
 										</footer>
 									</section>
 										
-									<section class="box">	
-
-				
-									</section>
+								
 
 							</div>
 							
@@ -80,9 +82,7 @@
 
 								<!-- Content -->
 									<article class="box post">
-										<header class='major'>
-											<button class="button-negative " ng-click ="reset()">Clear All</button></li>	
-										</header>
+											
 										<ul>						
 											<li ng-repeat="x in $storage.fullData">
 												<section class="hitBox">												
@@ -100,6 +100,8 @@
 				
 				
 			<!-- Footer -->
+			
+			<!--
 				<div id="footer-wrapper">
 					<section id="footer" class="container">
 						<div class="row">
@@ -221,7 +223,7 @@
 						<div class="row">
 							<div class="12u">
 
-								<!-- Copyright -->
+								
 									<div id="copyright">
 										<ul class="links">
 											<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
@@ -232,8 +234,10 @@
 						</div>
 					</section>
 				</div>
-
+				-->
 		</div>
+		
+		
 
 
 

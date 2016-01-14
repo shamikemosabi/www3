@@ -344,8 +344,8 @@ $scope.toggle = 1
 				
 				if( $scope.displayChat == null)
 				{
-				//	 $scope.displayChat = []; //create empty object 
-				$scope.displayChat = ""; //create empty object 
+					 $scope.displayChat = []; //create empty object 
+				//$scope.displayChat = ""; //create empty object 
 				}
 				
 				var bool=true;
@@ -366,8 +366,9 @@ $scope.toggle = 1
 				{
 					var date = new Date(value.date);
 
-					//$scope.displayChat.push(value);
-					ret += "<b>" + date.toLocaleString() + "</br>" + getDutyColor(value.user)+ "</b> : " + value.msg + "</br>" + "</br>";
+					$scope.displayChat.push(value);
+					
+					//ret += "<b>" + date.toLocaleString() + "</br>" + getDutyColor(value.user)+ "</b> : " + value.msg + "</br>" + "</br>";
 				}
 			
 			}
@@ -378,7 +379,7 @@ $scope.toggle = 1
 			});
 			*/
 			
-			$scope.displayChat = ret;
+			//$scope.displayChat = ret;
 		//return ret;
 	};
 

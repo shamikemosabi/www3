@@ -425,7 +425,7 @@
 	@media screen and (min-width: 737px) {
 
 		.row > * {
-			padding: 50px 0 0 50px;
+			padding: 10px 0 0 50px;
 		}
 
 		.row {
@@ -1280,7 +1280,7 @@
 
 	.box {
 		background: #333333 ;
-
+		font-size: 1em;
 		border-radius: 15px;
 	}
 
@@ -1803,7 +1803,7 @@
 		/* Box */
 
 			.box {
-				padding: 2.75em 1.75em 2.75em 1.75em;
+				padding: .75em .75em .75em .75em;
 			}
 
 				.box .image.featured {
@@ -1814,7 +1814,13 @@
 				
 				.box.post{
 				overflow-y: auto;
-				height:945px;
+				height:680px;
+				}
+				
+				.box.ChatPost{
+				overflow-y: auto;
+				overflow-x: hidden;
+				height:472px;
 				}
 
 				.box.post header {
@@ -1889,7 +1895,7 @@
 		/* Wrappers */
 
 			#header-wrapper {
-				padding: 4.5em 0 4em 0;
+				padding: 2.5em 0 2em 0;
 			}
 
 			#main-wrapper {
