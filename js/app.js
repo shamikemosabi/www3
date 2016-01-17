@@ -77,7 +77,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	// if null then default
 	if($scope.$storage.clearDate==null)
 	{
-		var d = new Date(0);
+		var d = new Date();
 		$scope.$storage.clearDate = d.getTime();
 	}
 	
@@ -337,16 +337,16 @@ $scope.toggle = 1
 
 		var ret = "";
 		 
-		 
+		 $scope.displayChat = [];
 			for( j = 0; j <$scope.chat.length; j ++ )
 			{
 				value = $scope.chat[j];
 				
-				if( $scope.displayChat == null)
-				{
-					 $scope.displayChat = []; //create empty object 
+			//	if( $scope.displayChat == null)
+				//{
+					// $scope.displayChat = []; //create empty object 
 				//$scope.displayChat = ""; //create empty object 
-				}
+			//	}
 				
 				var bool=true;
 				
@@ -365,6 +365,9 @@ $scope.toggle = 1
 				if(value.date >  $scope.$storage.clearDate)
 				{
 					var date = new Date(value.date);
+					
+					value.newdate = date.toLocaleString();
+					
 
 					$scope.displayChat.push(value);
 					
@@ -382,6 +385,14 @@ $scope.toggle = 1
 			//$scope.displayChat = ret;
 		//return ret;
 	};
+	
+	
+	$scope.renderHtmlChat = function(user, html_code) {
+		var str = getDutyColor(user) + " : "+ html_code;
+		return  $sce.trustAsHtml(str);
+	};
+	
+	
 
 	function getDutyColor(user)
 	{
@@ -559,6 +570,8 @@ $scope.toggle = 1
 	
 //chat	
 	
+	
+
 			
 
 	$scope.renderHtml = function(html_code) {

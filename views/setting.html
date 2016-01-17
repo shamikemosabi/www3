@@ -1,10 +1,10 @@
-				<div id="header-wrapper">
+	<div id="header-wrapper">
 					<div id="header">
 
 						<!-- Logo -->
 							<h1>
 								<font color='lightgray'> 
-									<a href="#/"> Mturk Plus </a>
+									<a href="#/" style="text-decoration:none"> Mturk Plus </a>
 								</font>
 							</h1>
 
@@ -12,90 +12,27 @@
 							<nav id="nav">
 								<ul>
 									<li ><a href="#/">Home</a></li>									
-									<li class="current"><a href="#/setting">setting</a></li>									
+									<li class="current"><a href="#/setting">setting</a></li>
+									<li ><a href="#/about">About</a></li>										
 								</ul>
 							</nav>
 
 					</div>
-				</div>
-				
-    <nav class="bar-standard bar-header-secondary">
-	    <div class="tab-item2" >
-		Last updated on {{date}}
-		</div>
-	</nav>
-
-   <nav class="bar-tab">
-    <ul class="tab-inner">
-	  <li class="tab-item2">
-        <a href="#/">
-          <img class="tab-icon" src="img/icon-home.png">
-          <div class="tab-label">Home</div>
-        </a>
-      </li>
-    </ul>
-  </nav>
-  
-   <div class="content toggleChat"> 
-   
-		<div class="col-md-10">
-				
-					<label class="label label-default" >Sound:</label>
-						<div class="radio">
-							<label>
-								<input type="radio" name="chickenEgg" ng-value="true" ng-model="$storage.bSound">
-								ON
-							</label>
-						</div>
-						<div class="radio">
-							<label>
-								<input type="radio" name="chickenEgg" ng-value="false" ng-model="$storage.bSound">
-								OFF
-							</label>
-						</div>
-
-
-		</div>
-	
-		
-		<div class="col-md-3">
-		
-			
-				<div class="input-group	">
-					
-					<input class='soundSlider form-control' type=range min=0 max=1 step=0.02 ng-model='audio.volume'  ng-change="saveSlider(audio.volume)"/>
-							{{audio.volume }} 
-				
-				</div>
-	
-				
-				
-				<div class="dropdown col-md-6">
-					<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{$storage.currentSound}}
-						<span class="caret"></span>
-					</button>
-					
-					<ul class="dropdown-menu" aria-labelledby="dropdown">
-						<li ng-repeat="a in soundList"><a ng-click="dropboxitemselected(a)">{{a}}</a></li>
-					</ul>
-				</div>
-						
-						
-				<div class="col-md-6">			
-					<button class="btn btn-default" ng-click="playSound()">play</button>
-				</div>
-				
-		</div>
-								
 	</div>
+				
+  
+	<div id="main-wrapper">
+   
+						
+
+		<div class="container">   
 	
-	
-	
-	
-    <div class="container">   
-		</br>
-        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
-            <div class="panel panel-info" >
+			<div class="row fixMargin">
+			
+			
+				<div class="col-md-10 ">
+					<div id="loginbox"  class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
+					<div class="panel panel-info" >
                     <div class="panel-heading">
                         <div class="panel-title" ng-click="toggleSignIn()"><a >Sign In</a></div>
 						<div style="float:right; font-size: 80%; position: relative; top:-10px; left: 10px"> <a ng-click="toggleForgotPW()">Forgot password?</a> </div>
@@ -181,10 +118,63 @@
                         </div>      
 
                     </div>				
-        </div>
-      
-    </div>
-
+				</div>
+		</div>	
+	
+				<div class="col-md-2">
+					<div class="fixMargin row">
+					<div class="col-md-12">
+								
+							<label class="label label-default" >Sound:</label>
+								<div class="radio">
+									<label>
+									<input type="radio"  ng-value="true" ng-model="$storage.bSound">
+										ON
+									</label>
+								</div>
+							<div class="radio">
+								<label>
+									<input type="radio" ng-value="false" ng-model="$storage.bSound">
+										OFF
+								</label>
+							</div>
+					</div>
+					<div class="col-md-12">
+					
+						
+							<div class="input-group	">
+								
+								<input class='soundSlider form-control' type=range min=0 max=1 step=0.02 ng-model='audio.volume'  ng-change="saveSlider(audio.volume)"/>
+										{{audio.volume }} 
+							
+							</div>
+				
+						<div class="row fixMargin ">
+							<div class="dropdown col-md-6">
+								<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{$storage.currentSound}}
+									<span class="caret"></span>
+								</button>
+								
+								<ul class="dropdown-menu" aria-labelledby="dropdown">
+									<li ng-repeat="a in soundList"><a ng-click="dropboxitemselected(a)">{{a}}</a></li>
+								</ul>
+							</div>
+									
+									
+							<div class="col-md-6">			
+								<button class="btn btn-default" ng-click="playSound()">play</button>
+							</div>
+						</div>	
+							
+					</div>
+				
+				</div>					
+			</div>
+		 
+			</div>
+		
+		</div>
+	</div>
     	
 
 <script>
