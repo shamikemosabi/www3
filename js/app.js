@@ -72,6 +72,11 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 					document.title = this.Vars.OriginalTitle;   
 				}
 	};
+	
+	if($scope.$storage.theme==null)
+	{
+		$scope.$storage.theme = "light";
+	}
 
 	// load default audio:
 	// if null then default

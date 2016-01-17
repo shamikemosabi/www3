@@ -13,18 +13,13 @@
 			
 		<div id="page-wrapper">
 
-			<!-- Header -->
-				<div id="header-wrapper">
+				<div id="header-wrapper" class="{{$storage.theme}}">
 					<div id="header">
 
-						<!-- Logo -->
 							<h1>
-								<font color='lightgray'> 
-									<a href="#/" style="text-decoration:none"> Mturk Plus </a>
-								</font>
+								<a href="#/" style="text-decoration:none" class="title {{$storage.theme}}" > Mturk Plus </a>
 							</h1>
 
-						<!-- Nav -->
 							<nav id="nav">
 								<ul>
 									<li class="current"><a href="#/">Home</a></li>										
@@ -36,27 +31,26 @@
 					</div>
 				</div>
 				
-				
-			<!-- Main -->
-				<div id="main-wrapper">
+			
+				<div id="main-wrapper" class="{{$storage.theme}}">
 					<div >
 						<button class="clearAll" ng-click ="reset()">Clear All</button>													
 					</div>
 					
-					<div class="lastUpdate">
+					<div class="lastUpdate {{$storage.theme}}">
 						Last updated on {{date}}
 					</div>
 					
 					
 					<div class="container">
-						<div class="row">
+						<div class="row  {{$storage.theme}}">
 												
 							<div class="3u 12u(mobile)">
-								<!-- Sidebar -->
+
 								
-									<section class="box container">
+									<section class="box container {{$storage.theme}}">
 								
-										<div class="box container ChatPost">
+										<div class="box container ChatPost {{$storage.theme}}">
 											<ul >						
 												<li ng-repeat="a in displayChat">
 													<section class="hitBox">		
@@ -89,9 +83,7 @@
 							</div>
 							
 							<div class="9u 12u(mobile) important(mobile)">
-
-								<!-- Content -->
-									<article class="box post">
+									<article class="box post {{$storage.theme}}">
 											
 										<ul>						
 											<li ng-repeat="x in $storage.fullData">
@@ -145,13 +137,7 @@
 					</div>
 				</div>
 
-				
-				
-			<!-- Footer -->
-			
-			<!--
-				
-				-->
+
 		</div>
 			
 	</body>

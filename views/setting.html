@@ -1,14 +1,12 @@
-	<div id="header-wrapper">
+	<div id="header-wrapper" class="{{$storage.theme}}">
 					<div id="header">
 
-						<!-- Logo -->
+						
 							<h1>
-								<font color='lightgray'> 
-									<a href="#/" style="text-decoration:none"> Mturk Plus </a>
-								</font>
+								<a href="#/" style="text-decoration:none" class="title {{$storage.theme}}"> Mturk Plus </a>
 							</h1>
 
-						<!-- Nav -->
+				
 							<nav id="nav">
 								<ul>
 									<li ><a href="#/">Home</a></li>									
@@ -21,16 +19,14 @@
 	</div>
 				
   
-	<div id="main-wrapper">
+	<div id="main-wrapper" class="{{$storage.theme}}">
    
-						
-
 		<div class="container">   
 	
-			<div class="row fixMargin">
+			<div class="row fixMargin {{$storage.theme}}">
 			
 			
-				<div class="col-md-10 ">
+				<div class="col-md-8 ">
 					<div id="loginbox"  class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">                    
 					<div class="panel panel-info" >
                     <div class="panel-heading">
@@ -122,7 +118,7 @@
 		</div>	
 	
 				<div class="col-md-2">
-					<div class="fixMargin row">
+					<div class="fixMargin row {{$storage.theme}}">
 					<div class="col-md-12">
 								
 							<label class="label label-default" >Sound:</label>
@@ -149,7 +145,7 @@
 							
 							</div>
 				
-						<div class="row fixMargin ">
+						<div class="row fixMargin {{$storage.theme}}">
 							<div class="dropdown col-md-6">
 								<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{$storage.currentSound}}
 									<span class="caret"></span>
@@ -170,6 +166,27 @@
 				
 				</div>					
 			</div>
+			
+				<div class="col-md-2">
+						<div class="fixMargin row {{$storage.theme}}">
+							<div class="col-md-12">
+								<label class="label label-default" >Theme:</label>
+								<div class="radio">
+									<label>
+										<input type="radio"  value="light" ng-model="$storage.theme">
+											Light
+										</label>
+								</div>
+								<div class="radio">
+									<label>
+										<input type="radio" value="dark" ng-model="$storage.theme">
+											Dark
+									</label>
+								</div>	
+										
+							</div>
+						</div>
+				</div>
 		 
 			</div>
 		

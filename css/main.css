@@ -1284,9 +1284,15 @@
 	.box {
 		background: #333333 ;
 		font-size: 1em;
-		
-		
 	}
+	
+			.box.light{
+				background: #f2f2f2 ;
+				border: solid 1px #ccc;	
+			}
+			.box.dark{
+				background: #333333 ;
+			}
 
 		.box .image.featured {
 			position: relative;
@@ -1698,14 +1704,36 @@
 		background: #181818;
 		border-bottom: solid 1px #ccc;
 	}
+	
+		#header-wrapper.light{
+			background: white;
+		}
+	
+		#header-wrapper.dark {
+			background: #181818;
+		}
 
 	#main-wrapper {
 		position: relative;
 		background: #181818 url("images/bg02.png");
-		border-radius: 15px
-		/*border-bottom: solid 1px #ccc;	*/
+		border-radius: 15px;	
+		border-style: solid;
+		
+		min-height: 670px;
+
+	
 	
 	}
+	
+		#main-wrapper.light {
+			background: white;
+			border: solid 1px #ccc;	
+		
+		}
+		#main-wrapper.dark {
+			background: #181818 url("images/bg02.png");
+		
+		}
 	
 	
 
@@ -1851,7 +1879,7 @@
 					overflow-y: auto;
 					
 					height:643px;
-					width: 410px;
+					width: 380px;
 					padding: .1em 1em 0em 0;
 					
 					-webkit-transform: scale(1);
@@ -2648,6 +2676,7 @@
 		width:100%;
 		font-size : 20px;
 		position:relative;
+		left:7px;
 	
 	}
 	
@@ -2787,7 +2816,7 @@
 		margin-right: 2%;
 		margin-top: 2%;
 		color:white;
-		font-family: 'Source Sans Pro';
+	
 		
 		font-size : 16px;
 		font-weight: 700;
@@ -2814,8 +2843,19 @@ width:55%;
 		font-family: 'Source Sans Pro';
 		font-size : 20px;
 		font-weight: 700;
+		padding-top:5px;
+	}
+	
+	.lastUpdate.light{
+		
+		color:#5D5D5D;
+	
 	
 	}
+			.lastUpdate.dark{
+				color:lightgrey;
+			
+			}
 	
 	.row.fixMargin{
 		margin: 0 0 -1px 0;
@@ -2824,7 +2864,13 @@ width:55%;
 		font-family: 'Source Sans Pro';
 		font-size:16px;
 	}
-
+	
+			.row.fixMargin.light{
+				color:black;
+			}
+				.row.fixMargin.dark{
+				color:lightgrey;
+			}
 
 	.xChat{
 		position:absolute;
@@ -2836,3 +2882,22 @@ width:55%;
 	.cen{
 		text-align: center;
 	}
+	
+	.title{
+		color:#5D5D5D;
+		
+	
+	}
+	.title.light{
+		color:#5D5D5D;
+		
+	
+	}
+	
+	.title.dark{
+		color:lightgrey;
+		
+	
+	}
+	
+	
