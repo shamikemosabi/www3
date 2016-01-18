@@ -54,12 +54,10 @@
 											<ul >						
 												<li ng-repeat="a in displayChat">
 													<section class="hitBox">		
-														
 														<div >
-															{{a.newdate}}															
+															{{a.newdate}}												
 														</div>	
-														
-														<div ng-bind-html="renderHtmlChat(a.user,a.msg)"> </div>
+														<div ng-bind-html="a.htmlMsg"> </div>
 													</section>
 												</li>
 											</ul>

@@ -373,6 +373,8 @@ $scope.toggle = 1
 					
 					value.newdate = date.toLocaleString();
 					
+					value.htmlMsg = $scope.renderHtmlChat(value.user, value.msg);
+					
 
 					$scope.displayChat.push(value);
 					
@@ -390,6 +392,8 @@ $scope.toggle = 1
 			//$scope.displayChat = ret;
 		//return ret;
 	};
+	
+	
 	
 	
 	$scope.renderHtmlChat = function(user, html_code) {
@@ -575,9 +579,6 @@ $scope.toggle = 1
 	
 //chat	
 	
-	
-
-			
 
 	$scope.renderHtml = function(html_code) {
 		return $sce.trustAsHtml(html_code);
