@@ -1,4 +1,4 @@
-var app = angular.module('app', ["ngRoute", "ngStorage", "ngAudio", "firebase", "ui.bootstrap"]);
+var app = angular.module('app', ["ngRoute", "ngStorage", "ngAudio", "firebase", "ui.bootstrap", "ngSanitize"]);
 
 
 app.config( ['$routeProvider', function($routeProvider) {
@@ -149,6 +149,9 @@ $scope.toggle = 1
 					//$scope.$storage.oldNames  = $scope.$storage.newNames
 					$scope.replaceObj($scope.$storage.oldNames,  $scope.$storage.newNames);
 					
+					//let's change newNames Post into html, when we add to fullData it's already html safe
+					//$scope.renderHtmlData();
+					
 					//set local full storage
 					$scope.$storage.fullData = $scope.$storage.newNames.records.concat($scope.$storage.fullData )											
 					
@@ -173,6 +176,7 @@ $scope.toggle = 1
 				}
 				$scope.cleanNull();
 				$scope.loadLikes();
+				$scope.renderHtmlData();
 			});		
 		
 		if($scope.$storage.oldNames!=null)
@@ -210,6 +214,19 @@ $scope.toggle = 1
 		$scope.$storage.oldNames.date = newObj.date;
 		
 		//return oldObj;
+	};
+	
+	
+	$scope.renderHtmlData  = function()
+	{
+		for (var i=0; i< $scope.$storage.fullData.length; i++) {
+			var v =  $scope.$storage.fullData[i];
+			if($scope.$storage.fullData[i].Post.constructor.name!="TrustedValueHolderType"){
+				v.Post = $scope.renderHtml(v.Post);
+			}
+			
+		}
+
 	};
 	
 	
