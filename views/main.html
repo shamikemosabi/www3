@@ -8,9 +8,7 @@
 	</head>
 	<body>
 	
-
 		
-			
 		<div id="page-wrapper">
 
 				<div id="header-wrapper" class="{{$storage.theme}}">
@@ -33,6 +31,7 @@
 				
 			
 				<div id="main-wrapper" class="{{$storage.theme}}">
+
 					<div >
 						<button class="clearAll" ng-click ="reset()">Clear All</button>													
 					</div>
@@ -48,9 +47,9 @@
 							<div class="3u 12u(mobile)">
 
 								
-									<section class="box container {{$storage.theme}}">
+									<section class="box container {{$storage.theme}}" >
 								
-										<div class="box container ChatPost {{$storage.theme}}">
+										<div class="box container ChatPost {{$storage.theme}}" scroll-bot="displayChat">
 											<ul >						
 												<li ng-repeat="a in displayChat">
 													<section class="hitBox">		
@@ -91,7 +90,7 @@
 												
 												
 													<div class="col-lg-11">												
-														<div class = "hitPost" ng-bind-html="x.Post" ></div>	
+														<div class = "hitPost" ng-bind-html="x.newPost" ></div>	
 
 													</div>
 													
@@ -114,7 +113,7 @@
 															
 																<span ng-click="open(x.Post, x.link)" class="fa fa-pencil-square fa-4x pencil"></span>	
 																<a href="{{x.link}}" target="_blank" >
-																	<button class="col-md-12 panda">PandA</button>
+																	<button class="col-md-12 panda" ng-click="delete($index)" >PandA</button>
 																</a>
 															</div>
 																										

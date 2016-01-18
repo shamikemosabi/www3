@@ -31,7 +31,22 @@ app.config( ['$routeProvider', function($routeProvider) {
 }]);
 
 
-
+app.directive('scrollBot', function() {
+	return {
+		scope: {
+			scrollBot: "="
+		},
+		link: function (scope, element) {
+			scope.$watchCollection('scrollBot', function (newValue) {
+				if (newValue)
+				{				
+				  $(element).scrollTop($(element)[0].scrollHeight);
+				}
+			});
+		}
+	}
+	
+});
 
 app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject ) {
 	
@@ -78,11 +93,12 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		$scope.$storage.theme = "light";
 	}
 
+	
 	// load default audio:
 	// if null then default
 	if($scope.$storage.clearDate==null)
 	{
-		var d = new Date();
+		var d = new Date(1453072113012);
 		$scope.$storage.clearDate = d.getTime();
 	}
 	
@@ -222,7 +238,7 @@ $scope.toggle = 1
 		for (var i=0; i< $scope.$storage.fullData.length; i++) {
 			var v =  $scope.$storage.fullData[i];
 			if($scope.$storage.fullData[i].Post.constructor.name!="TrustedValueHolderType"){
-				v.Post = $scope.renderHtml(v.Post);
+				v.newPost = $scope.renderHtml(v.Post);
 			}
 			
 		}
