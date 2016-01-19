@@ -439,7 +439,8 @@ $scope.toggle = 1
 	function getDutyColor(user)
 	{
 		var ret="";
-		var rec = loginList.$getRecord(user.toLowerCase());
+		var u = stripForID(user.toLowerCase());
+		var rec = loginList.$getRecord(u);
 		
 		if(rec==null)
 		{
