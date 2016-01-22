@@ -42,7 +42,7 @@
 					
 					
 					<div class="container">
-						<div class="row  {{$storage.theme}}">
+						<div class="row  {{$storage.theme}} fixMarginNoColor">
 												
 							<div class="3u 12u(mobile)">
 
@@ -69,7 +69,7 @@
 												<input ng-model="txtchat" ng-keydown="addMessage($event)" type="text" id="messageInput"  placeholder="Type a message..." class="chatInput" > 
 												<div class="chatButtonContainer">
 												<button class="btn btn-info" type="button" ng-click="send()">Send</button>
-												<button class="btn btn-warning" type="button" ng-click="clearChat()">Clear Chat</button>
+												<button class="btn btn-warning" style="float:right" type="button" ng-click="clearChat()">Clear Chat</button>
 												</div>
 											</div>	
 										</footer>

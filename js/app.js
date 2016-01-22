@@ -235,14 +235,16 @@ $scope.toggle = 1
 	
 	$scope.renderHtmlData  = function()
 	{
-		for (var i=0; i< $scope.$storage.fullData.length; i++) {
-			var v =  $scope.$storage.fullData[i];
-			if($scope.$storage.fullData[i].Post.constructor.name!="TrustedValueHolderType"){
-				v.newPost = $scope.renderHtml(v.Post);
+		if($scope.$storage.fullData != null && $scope.$storage.fullData.length > 0)
+		{
+			for (var i=0; i< $scope.$storage.fullData.length; i++) {
+				var v =  $scope.$storage.fullData[i];
+				if($scope.$storage.fullData[i].Post.constructor.name!="TrustedValueHolderType"){
+					v.newPost = $scope.renderHtml(v.Post);
+				}
+				
 			}
-			
 		}
-
 	};
 	
 	
