@@ -1,4 +1,4 @@
-var app = angular.module('app', ["ngRoute", "ngStorage", "ngAudio", "firebase", "ui.bootstrap", "ngSanitize"]);
+var app = angular.module('app', ["ngRoute", "ngStorage", "ngAudio", "firebase", "ui.bootstrap", "ngSanitize" , "ngEmbed"]);
 
 
 app.config( ['$routeProvider', function($routeProvider) {
@@ -50,7 +50,7 @@ app.directive('scrollBot', function() {
 
 app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject ) {
 	
-	
+  
 	$scope.$storage =  $localStorage;	
 	 
 	 //inialitze object
@@ -408,9 +408,10 @@ $scope.toggle = 1
 					
 					value.newdate = date.toLocaleString();
 					
-					value.htmlMsg = $scope.renderHtmlChat(value.user, value.msg);
-					
-
+					//value.htmlMsg = $scope.renderHtmlChat(value.user, value.msg);
+					value.userHtml = getDutyColor(value.user)
+					value.Msg =value.msg;
+					value.htmlMsg = value.htmlmsg;
 					$scope.displayChat.push(value);
 					
 					//ret += "<b>" + date.toLocaleString() + "</br>" + getDutyColor(value.user)+ "</b> : " + value.msg + "</br>" + "</br>";
@@ -959,13 +960,14 @@ app.controller('PopupInstanceController',
 				var d = new Date();
 				var u = getUserName();
 				
-				var string = "<font size=1>" + $scope.title  + "</font>" + " </br> " + $scope.txtcomment;
+				var string = "<font size=1>" + $scope.title  + "</font>" + " </br> " ;
 				
 				$scope.chat.$add({
-					  msg: string,
+					  msg:  $scope.txtcomment,
 					  date: d.getTime(),
 					  browser: navigator.userAgent,
-					  user: u
+					  user: u,
+					  htmlmsg: string
 				 });
 		  		  			
 				$scope.save();		
