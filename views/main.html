@@ -58,7 +58,12 @@
 														</div>	
 														<div ng-bind-html="a.userHtml"> </div>	
 														<div ng-bind-html="a.htmlMsg"> </div>	
-														<div ng-bind-html="a.Msg | embed"> </div>													
+													 <!--	<div ng-bind-html="a.Msg | embed"> </div>	-->
+														<ng-embed 
+														 embed-data="a.Msg"														
+														 embed-options="options"														
+														 ></ng-embed>	
+													
 													</section>
 												</li>
 											</ul>
