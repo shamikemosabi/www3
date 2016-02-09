@@ -1698,7 +1698,9 @@
 	#header-wrapper {
 		position: relative;
 		background: #181818;
-		border-bottom: solid 1px #ccc;
+		border: solid 1px #ccc;
+		border-top-left-radius: 15px;
+		border-top-right-radius: 15px;
 	}
 	
 		#header-wrapper.light{
@@ -1712,7 +1714,8 @@
 	#main-wrapper {
 		position: relative;
 		background: #181818 url("images/bg02.png");
-		border-radius: 15px;	
+		border-bottom-right-radius:15px;
+		border-bottom-left-radius:15px;
 		border-style: solid;
 		
 		min-height: 670px;
@@ -1962,7 +1965,7 @@
 		
 			#header-wrapper {
 				padding: 2.5em 0 2em 0;
-				
+				margin: 1em 1em 1em 1em;
 	
 			}
 
