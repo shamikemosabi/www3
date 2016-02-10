@@ -550,10 +550,51 @@ $scope.toggle = 1
 		{
 			ret = "<font color='#ff66cc' >" + user +"</font>";
 		}	
-		else //if(v < 600) //yellow
+		else if(v < 700) //yellow
 		{
 			ret = "<font color='#e5e600' >" + user +"</font>";
+			
 		}	
+		else if(v < 1200) //light green
+		{
+			ret = "<font color='#b3ffb3' >" + user +"</font>";
+			
+		}	
+		else if(v < 1500) //light blue
+		{
+			ret = "<font color='#b3e6ff' >" + user +"</font>";
+			
+		}
+		else if(v < 2000) //light purple
+		{
+			ret = "<font color='#dab3ff' >" + user +"</font>";
+			
+		}	
+		else if(v < 2500) //light orange
+		{
+			ret = "<font color='#ffaa80' >" + user +"</font>";
+			
+		}	
+		else if(v < 2500) //light pink
+		{
+			ret = "<font color='#ffccee' >" + user +"</font>";
+			
+		}	
+		else if(v < 3200) //bronze
+		{
+			ret = "<font color='#cd7f32' >" + user +"</font>";
+			
+		}
+		else if(v < 4500) //silver
+		{
+			ret = "<font color='#C0C0C0' >" + user +"</font>";
+			
+		}	
+		else //gold
+		{
+			ret = "<font color='#ffd700' >" + user +"</font>";
+			
+		}
 		
 		return ret;
 		
