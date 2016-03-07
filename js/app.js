@@ -147,12 +147,12 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		$scope.$storage.theme = "light";
 	}
 
-	
 	// load default audio:
 	// if null then default
 	if($scope.$storage.clearDate==null)
 	{
-		var d = new Date(1453072113012);
+		var d = new Date();
+		d.setDate(d.getDate()-7);
 		$scope.$storage.clearDate = d.getTime();
 	}
 	
