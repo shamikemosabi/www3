@@ -2904,4 +2904,8 @@ width:100%;
 	
 	}
 	
-	
+	.soundList{
+	  height: auto;
+		max-height: 300px;
+		overflow-y:scroll;
+	}

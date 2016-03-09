@@ -163,7 +163,10 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	 $scope.audio.volume =  $scope.$storage.currVol;
 
 	 
-	 $scope.soundList = ['apple-bite', 'blop', 'bubble-pop', 'cash-register','clinking','default','evil-laugh','fart','fly', 'hey','I-love-you', 'kid-laugh','pew','phone-vibrate','pin','pool', 'rain','reload','suspense','toke'];
+	 $scope.soundList = ['apple-bite', 'blop', 'bubble-pop', 'cash-register','clinking',
+			'default','evil-laugh','fart','fly', 'hey','I-love-you', 'kid-laugh','pew','phone-vibrate','pin','pool', 
+				'rain','reload','suspense',
+				'smb_1-up' , 'smb_coin', 'smb_fireball' , 'smb_jumpsmall', 'smb_pause', 'smb_pipe', 'smb_powerup', 'smb_stomp', 'toke'];
 	 
 	 $scope.dropboxitemselected = function (item) {		   		   
 		   $scope.$storage.currentSound = item+".mp3";		   
