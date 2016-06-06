@@ -737,13 +737,20 @@ $scope.toggle = 1
 	};
 	 	
 		//refresh
+	
 	$scope.intervalFunction = function(){
-		$timeout(function() {
+		mytimeout  = $timeout(function() {
 			$scope.getData();
 			$scope.loadChat();
 			$scope.intervalFunction();
 		}, 5000)
 	};
+	
+	$scope.$on("$destroy", function (event)  
+	{    
+		$timeout.cancel(mytimeout);  
+	}); 
+	
 	
 	$scope.intervalFunction();
 	
