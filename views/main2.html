@@ -20,9 +20,9 @@
 
 							<nav id="nav">
 								<ul>
-									<!--<li ><a href="http://www.mturkplus.com/#/beta" style="font-size:20px"> <b>Live Feed </b> </a></li>	-->
+									<!--<li class="current"><a href="#/beta" style="font-size:20px" ><b>Live Feed </b> </a></li>	-->
 									<li style="padding-right: 30px"></li>
-									<li class="current"><a href="http://www.mturkpl.us/#">Home</a></li>												
+									<li><a href="http://www.mturkpl.us/#">Home</a></li>										
 									<li ><a href="#/setting">setting</a></li>	
 									<li ><a href="#/about">About</a></li>	
 												
@@ -35,13 +35,13 @@
 				<div id="main-wrapper" class="{{$storage.theme}}">
 
 					<div >
-						<button class="clearAll" ng-click ="reset()">Clear All</button>													
+						<button class="clearAll" ng-click ="reset()">Reload Hits</button>													
 					</div>
 					
-					<div class="lastUpdate {{$storage.theme}}">
+					<div class="lastUpdate {{$storage.theme}} ">
 						Last updated on {{date}}
 					</div>
-					
+						<div class="lastUpdate numberOfHits {{$storage.theme}}" > Hits Available : {{$storage.newNamesLive.records.length}}  </div>
 					
 					<div class="container">
 						<div class="row  {{$storage.theme}} fixMarginNoColor">
@@ -85,17 +85,14 @@
 									</section>
 										
 								
-
 							</div>
 							
 							<div class="9u 12u(mobile) important(mobile)">
 									<article class="box post {{$storage.theme}}">
-											
+						
 										<ul>						
-											<li ng-repeat="x in $storage.fullData | orderBy : '-likes'">
-											
-											
-																	
+											<li ng-repeat="x in $storage.newNamesLive.records | orderBy : '-likes'"> <!--| orderBy : '-likes'-->
+														
 												<div class="hitContainer"> 
 												
 												
@@ -110,7 +107,7 @@
 														
 															
 															<div class="col-md-12">
-																<button  class="col-md-12 X" ng-click="delete($index)" > x </button>
+																<button  class="col-md-12 X" ng-click="deleteHit($index, x.link)" > x </button>
 																
 																<span class="upVote col-sm-12 fa fa-thumbs-o-up  fa-3x " ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVote click', false:''}[buttonDisable==true]" >  </span>
 																<span class=" col-sm-12 " ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>

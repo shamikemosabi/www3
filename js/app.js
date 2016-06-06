@@ -22,7 +22,12 @@ app.config( ['$routeProvider', function($routeProvider) {
 			templateUrl: 'views/setting.html'
 
 		})
-		
+		.when('/beta',
+		{
+			controller: 'betaCtrl',
+			templateUrl: 'views/main2.html'
+
+		})
 		
 
 		
@@ -48,6 +53,8 @@ app.directive('scrollBot', function() {
 	
 });
 
+	
+	
 app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject ) {
 	$scope.options = {
 		linkTarget       : '_blank',  
@@ -104,7 +111,7 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		  },			  
 	}
 
-  
+ 
 	$scope.$storage =  $localStorage;	
 	 
 	 //inialitze object
@@ -149,7 +156,9 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 
 	// load default audio:
 	// if null then default
-	if($scope.$storage.clearDate==null)
+	// if it's not null, but it's an really old date that's more then 1 weeks, then force it to be 1 weeks.
+	
+	if($scope.$storage.clearDate==null || ( ((new Date().getTime()) - $scope.$storage.clearDate ) > 518400000 ))
 	{
 		var d = new Date();
 		d.setDate(d.getDate()-7);
@@ -1031,7 +1040,9 @@ $scope.toggle = 1
 	//login	
 
 
-});
+});	
+
+
 
 
 app.controller('PopupInstanceController',

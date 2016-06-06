@@ -2852,7 +2852,19 @@ width:100%;
 				color:lightgrey;
 			
 			}
-	
+			
+	.lastUpdate.numberOfHits{
+		left:80%;
+		color:#5D5D5D;
+	}		
+		.lastUpdate.numberOfHits.light{
+		left:80%;
+		color:#5D5D5D;
+	}				
+	.lastUpdate.numberOfHits.dark{
+		left:80%;
+		color:lightgrey;
+	}	
 	.row.fixMargin{
 		margin: 0 0 -1px 0;
 		
