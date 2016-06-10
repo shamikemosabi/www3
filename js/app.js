@@ -22,7 +22,7 @@ app.config( ['$routeProvider', function($routeProvider) {
 			templateUrl: 'views/setting.html'
 
 		})
-		.when('/beta',
+		.when('/feed',
 		{
 			controller: 'betaCtrl',
 			templateUrl: 'views/main2.html'

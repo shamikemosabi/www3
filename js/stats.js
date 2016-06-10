@@ -223,6 +223,7 @@ $scope.toggle = 1
 	$scope.removeDeletedHits = function()
 	{
 		//traverse backwards
+		
 		for(var j = $scope.$storage.newNamesLive.records.length - 1; j >= 0 ; j--){
 			
 			var link = $scope.$storage.newNamesLive.records[j].link;
