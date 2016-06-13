@@ -9,7 +9,7 @@
 	<body>
 	
 		
-		<div id="page-wrapper">
+		<div id="page-wrapper" class="{{$storage.theme}}">
 
 				<div id="header-wrapper" class="{{$storage.theme}}">
 					<div id="header">
@@ -54,7 +54,7 @@
 										<div class="box container ChatPost {{$storage.theme}}" scroll-bot="displayChat">
 											<ul >						
 												<li ng-repeat="a in displayChat">
-													<section class="hitBox">		
+													<section class="hitBox {{$storage.theme}}">			
 														<div >
 															{{a.newdate}}												
 														</div>	
@@ -93,7 +93,7 @@
 										<ul>						
 											<li ng-repeat="x in $storage.newNamesLive.records | orderBy : '-likes'"> <!--| orderBy : '-likes'-->
 														
-												<div class="hitContainer"> 
+												<div class="hitContainer {{$storage.theme}}"> 
 												
 												
 													<div class="col-lg-11">												
@@ -103,15 +103,15 @@
 													
 													<div class="col-lg-1"> 
 														
-														<div class="hitDetail">
+														<div class="hitDetail {{$storage.theme}}">
 														
 															
 															<div class="col-md-12">
 																<button  class="col-md-12 X" ng-click="deleteHit($index, x.link)" > x </button>
 																
-																<span class="upVote col-sm-12 fa fa-thumbs-o-up  fa-3x " ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVote click', false:''}[buttonDisable==true]" >  </span>
+																<span class="upVote col-sm-12 fa fa-thumbs-o-up  fa-3x {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVote click', false:''}[buttonDisable==true]" >  </span>
 																<span class=" col-sm-12 " ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>
-																<span class="downVote col-sm-12  fa fa-thumbs-o-down fa-3x" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVote click', false:''}[buttonDisable==false]"></span>																
+																<span class="downVote col-sm-12  fa fa-thumbs-o-down fa-3x {{$storage.theme}}" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVote click', false:''}[buttonDisable==false]"></span>																
 															</div>
 														
 														

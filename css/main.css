@@ -1065,13 +1065,13 @@
 
 	body {
 		background: #0d0d0d;
-		background-image: url("images/bg02.png");
 		font-family: 'Source Sans Pro';
 		
 		font-size : 16px;
 		font-weight: 700;
 		color: black;
 	}
+
 
 		body.is-loading * {
 			-moz-transition: none !important;
@@ -1083,6 +1083,8 @@
 			-ms-animation: none !important;
 			animation: none !important;
 		}
+		
+	
 
 	input, textarea, select {
 		font-family: 'Source Sans Pro';
@@ -1287,7 +1289,7 @@
 				border-bottom-style: solid 1px #ccc;
 			}
 			.box.dark{
-				background: #333333 ;
+				background: #2f2d2d ;
 			}
 
 		.box .image.featured {
@@ -1694,6 +1696,8 @@
 			}
 
 /* Wrappers */
+
+
 	
 	#header-wrapper {
 		position: relative;
@@ -1956,11 +1960,14 @@
 		/* Wrappers */
 
 		
+		#body-wrapper.dark{
+			background:#181818;
+		
+		}
+		
 			#page-wrapper{
-			
-
-				 
 		}		
+		
 		
 		
 			#header-wrapper {
@@ -2652,6 +2659,18 @@
 		margin-bottom: 1em;
 	}
 	
+		.hitContainer.light{
+		
+		background:white;
+	
+	
+	}
+		.hitContainer.dark{
+				background:#181818;
+				color:#d3d3d3;
+			}
+			
+	
 	.hitPost{
 		padding:5px;
 	}
@@ -2671,6 +2690,11 @@
 	
 	}
 	
+	.hitBox.dark{
+		background:#181818;
+		color:lightgrey;
+	}
+	
 	.hitBox.TWO{
 		display: block;
 		background : white;
@@ -2688,8 +2712,19 @@
 		float:right;
 		margin-top: 10px;
 	}
+		ul.social li a.fa-envelope  {
+					background: #e24c40;
+				}
 	
+	.hitDetail.light{
+		
+		background:white;
 	
+	}
+	.hitDetail.dark{
+		background:#181818;
+		color:#d3d3d3;
+	}
 	
 	
 	.X{
@@ -2735,17 +2770,15 @@
 			  
 		}
 		
+		.upVote.dark{
+			color:lightgrey;
+		}
+		
 			.upVote.click{
 				color:blue;
 				pointer-events: none;
 			}
-			
-				.upVote:hover {
-				background: white;
-			}
-					.upVote.alt:hover {
-				background: white;
-			}
+				
 			
 			
 		.downVote{	
@@ -2755,16 +2788,14 @@
 			position:relative;
 
 		}
+		.downVote.dark{
+			color:lightgrey;
+		}
 		.downVote.click{
 				color:red;
 				
 			}
-			.downVote:hover {
-				background: white;
-			}
-			.downVote.alt:hover {
-				background: white;
-			}
+
 			
 		
 		.hitDetailButton.value{	
