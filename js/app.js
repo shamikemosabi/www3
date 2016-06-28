@@ -122,12 +122,10 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		
 		
 		// var ref2 = new Firebase("https://amber-fire-5449.firebaseio.com/chat/");
-		$scope.chat = $firebaseArray(ref.child("chat")); //local
+		$scope.chat = $firebaseArray(ref.child("chat")); 
 		 
 		var loginList = $firebaseArray(ref.child("u"));
 	
-	
-
 	 //firebase
 	 
 	var PageTitleNotification = {
@@ -153,10 +151,33 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	{
 		$scope.$storage.theme = "light";
 	}
+	
+	//setting qual
+	if($scope.$storage.qualFilter==null)
+	{
+		$scope.$storage.qualFilter = false;
+	}
+	if($scope.$storage.ApproveHit==null)
+	{
+		$scope.$storage.ApproveHit = 0;
+	}
+	if($scope.$storage.ApprovalRate==null)
+	{
+		$scope.$storage.ApprovalRate = 0;
+	}
+	if($scope.$storage.location==null)
+	{
+		$scope.$storage.location = 'US';
+	}
+	if($scope.$storage.isMaster==null)
+	{
+		$scope.$storage.isMaster = false;
+	}
 
 	// load default audio:
 	// if null then default
 	// if it's not null, but it's an really old date that's more then 1 weeks, then force it to be 1 weeks.
+	
 	
 	if($scope.$storage.clearDate==null || ( ((new Date().getTime()) - $scope.$storage.clearDate ) > 518400000 ))
 	{
@@ -437,6 +458,7 @@ $scope.toggle = 1
 	
 	
 
+	
 //chat
 	
 	$scope.loadChat = function (){
@@ -634,10 +656,13 @@ $scope.toggle = 1
 				var obj = snapshot.val();
 				user =  obj.user
 			});	
+			
+			
 		}
 		else{
 			user = "Anonymous";
 		}
+		
 		
 		return user;
 	};
@@ -780,13 +805,13 @@ $scope.toggle = 1
 	$scope.loginSuccMsg="";
 	$scope.currentLoginUserName=getUserName(); //only used as display
 	$scope.loggedIn = ref.getAuth();
+	
 	//pane
 	$scope.singInPane = true;
 	$scope.forgotPwPane = false;
 	$scope.changePwPane = false;
 	
 	$scope.btnLogin = function(){
-		
 		logInto($scope.loginEmail,$scope.loginPassword)
 	};
 
@@ -873,6 +898,64 @@ $scope.toggle = 1
 		$scope.currentLoginUserName="";
 	};
 	
+	
+	
+	$scope.SaveSetting = function(){
+		
+		var user = getUserName();
+		user = stripForID(user.toLowerCase());
+		if(user!='Anonymous'){
+			
+			ref.child("u").child(user).child("qual").set({ "qualFilter" : $scope.$storage.qualFilter, 
+															"ApproveHit" : $scope.$storage.ApproveHit,
+															"ApprovalRate" : $scope.$storage.ApprovalRate,
+															"location"     : $scope.$storage.location,
+															"isMaster"	   : $scope.$storage.isMaster
+															});
+															
+		$scope.loginSuccMsg = "Setting Saved Successfully.";
+		$scope.loginErrMsg = "";												
+		
+		}
+		else
+		{
+			$scope.loginErrMsg = "Error Saving Setting, please contact Administrator";	
+			$scope.loginSuccMsg = "";								
+		}
+	}
+	
+	
+	function getQual(u)
+	{
+		
+		var u = stripForID(u.toLowerCase());
+		var rec = loginList.$getRecord(u);	
+		
+		if(rec.qual==null)
+		{
+				ref.child("u").child(u).child("qual").set({ "qualFilter" : false, 
+												"ApproveHit" : 0,
+												"ApprovalRate" : 0,
+												"location"     : 'US',
+												"isMaster"	   : false
+												});										
+			
+		}
+		else{
+														
+			$scope.$storage.qualFilter = rec.qual.qualFilter;
+			$scope.$storage.ApproveHit = rec.qual.ApproveHit;
+			$scope.$storage.ApprovalRate =  rec.qual.ApprovalRate;
+			$scope.$storage.location =  rec.qual.location ;
+			$scope.$storage.isMaster =  rec.qual.isMaster ;
+							
+		}
+		
+	
+				
+	}
+	
+	
 	function logInto(login, password){
 			ref.authWithPassword({
 					  email    :login,
@@ -905,8 +988,9 @@ $scope.toggle = 1
 						 $scope.loginErrMsg = "";
 						 $scope.loggedIn= true;
 						 var u = getUserName();
-						 $scope.currentLoginUserName = u;
+						 $scope.currentLoginUserName = u;		
 						 updateLastLogin(u);
+						 getQual(u); 
 					  }
 					});	
 	};

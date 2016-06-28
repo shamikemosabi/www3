@@ -92,7 +92,7 @@ app.controller('betaCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $
 					document.title = this.Vars.OriginalTitle;   
 				}
 	};
-	
+	$scope.$storage.ApproveHit
 	if($scope.$storage.theme==null)
 	{
 		$scope.$storage.theme = "light";

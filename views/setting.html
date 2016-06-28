@@ -46,6 +46,49 @@
 						 <div ng-show='loginSuccMsg != "" ' id="login-alert" class="alert alert-success col-sm-12" >{{loginSuccMsg}}</div>
 						 
 						 <div ng-show='loggedIn' class="alert alert-info col-sm-12" >logged in as {{currentLoginUserName}}</div>
+						 <div ng-show='loggedIn' >
+							 <div class="col-md-12">
+							 
+							 
+							 	<div style="margin-bottom: 25px" class="checkbox">
+								  	<label><input ng-model="$storage.qualFilter" type="checkbox" value=""><b>Use Qualification Filter</b></label>			
+								</div>
+								
+								
+								<div  style="margin-bottom: 10px" class="input-group" >
+									<div class="col-md-6 ">
+										<label class="label label-default" >Total approved HITs</label>
+									</div>
+									<div class="col-md-6 ">
+										<input ng-model="$storage.ApproveHit" ng-disabled="!$storage.qualFilter" type="number" class="form-control"   placeholder="900" onblur="this.placeholder ='900'" onfocus="this.placeholder = ''" >   
+									</div>
+								</div>
+								
+								<div style="margin-bottom: 10px" class="input-group">
+									<div class="col-md-6 ">
+										<label class="label label-default" >HIT approval rate (%)</label>
+									</div>
+									<div class="col-md-6 ">
+										<input ng-model="$storage.ApprovalRate" ng-disabled="!$storage.qualFilter" type="number" class="form-control"  value="" placeholder="99.8" onblur="this.placeholder ='99.8'" onfocus="this.placeholder = ''">   
+									</div>
+								</div>
+								
+								<div style="margin-bottom: 10px" class="input-group">
+									<div class="col-md-6 ">
+										<label class="label label-default" >Location is</label>
+									</div>
+									<div class="col-md-6 ">
+										<input ng-model="$storage.location" type="text" ng-disabled="!$storage.qualFilter" class="form-control"  value="" placeholder="US"  onblur="this.placeholder ='US'" onfocus="this.placeholder = ''">   
+									</div>
+								</div>
+								
+				
+								<div style="margin-bottom: 25px" class="checkbox"  >
+								  	<label><input type="checkbox" value="" ng-disabled="!$storage.qualFilter" ng-model="$storage.isMaster">Master has been granted</label> 
+								</div>
+							</div>	
+							
+						</div>	 
                             
                         <form id="loginform" class="form-horizontal" role="form">
                           
@@ -76,6 +119,7 @@
 										</div>
 										<div class="col-sm-12 controls" ng-show ="loggedIn">
 											<a class="btn btn-danger" ng-click="logOut()">Log out</a>
+											<a class="btn btn-primary" ng-click="SaveSetting()">Save Setting</a>
 										</div>
 								</div>							
 						   </div>
