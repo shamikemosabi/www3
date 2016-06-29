@@ -260,7 +260,10 @@ $scope.toggle = 1
 	};
 
 	
-
+	$scope.saveCollapseIndex = function(o)
+	{		
+		$scope.$storage.collapseIndex = o;
+	}
 	
 	
 	$scope.renderHtmlData  = function()

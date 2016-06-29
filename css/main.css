@@ -2734,6 +2734,11 @@
 		width:50%;
 	}
 	
+	.XHeader{		
+		float:right;
+		color:white;		
+	}
+	
 	.panda{	
 			color:white;
 			float:right;
