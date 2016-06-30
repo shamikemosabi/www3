@@ -1,5 +1,5 @@
 
-app.controller('betaCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject ) {
+app.controller('betaCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject, $window) {
 	$scope.options = {
 		linkTarget       : '_blank',  
 	    image    : {
@@ -263,6 +263,27 @@ $scope.toggle = 1
 	$scope.saveCollapseIndex = function(o)
 	{		
 		$scope.$storage.collapseIndex = o;
+	}
+	
+	$scope.openURL = function(s)
+	{
+		 $window.open(s, '_blank');
+	}
+	
+	$scope.trimTitle = function(s)
+	{
+		var ret ="";
+		if(s.length > 35)
+		{
+			ret =s.substring(0, 34) + "...";
+		}		
+		else
+		{
+			ret = s;
+		}
+		
+		return ret;
+		
 	}
 	
 	

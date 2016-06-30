@@ -2744,6 +2744,10 @@
 			float:right;
 		}
 		
+	.pandaHeader{	
+			color:red;
+		}		
+		
 		.pandaContainer{
 			top: 3em;
 		}
@@ -2770,9 +2774,7 @@
 			border: none;  padding: 2; background: none;
 			color: black;
 			float:right;
-			position:relative;
-			
-			  
+			position:relative;  
 		}
 		
 		.upVote.dark{
@@ -2783,7 +2785,17 @@
 				color:blue;
 				pointer-events: none;
 			}
-				
+		
+		.upVoteHeader{	
+			color: black;
+		}	
+
+		.upVoteHeader.click{
+						color:blue;
+						pointer-events: none;
+		}		
+		
+			
 			
 			
 		.downVote{	
@@ -2800,7 +2812,14 @@
 				color:red;
 				
 			}
+		.downVoteHeader{	
+					color: black;
+				}	
 
+		.downVoteHeader.click{
+						color:red;
+						pointer-events: none;
+		}	
 			
 		
 		.hitDetailButton.value{	
@@ -2816,7 +2835,6 @@
 			.upClick{
 				color:blue;
 				font-size:20px;	
-			margin-left: 6px;
 
 
 			}
@@ -2950,10 +2968,16 @@ width:100%;
 		color:lightgrey;
 		
 	
-	}
+	}	
 	
 	.soundList{
 	  height: auto;
 		max-height: 300px;
 		overflow-y:scroll;
+	}
+
+
+	.accordion-toggle:focus{
+	outline: none;
+	
 	}

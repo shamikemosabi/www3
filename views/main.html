@@ -111,7 +111,7 @@
 														
 															
 															<div class="col-md-12">
-																<button  class="col-md-12 X" ng-click="delete($index)" > x </button>
+																<button  class="col-md-12 X" ng-click="deleteHit($index)" > x </button>
 																
 																<span class="upVote col-sm-12 fa fa-thumbs-o-up  fa-3x {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVote click', false:''}[buttonDisable==true]" >  </span>
 																<span class=" col-sm-12 " ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>

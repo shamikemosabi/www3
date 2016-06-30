@@ -8,7 +8,7 @@
 	</head>
 	<body>
 	
-		
+		<div class="fixMargin">
 		<div id="page-wrapper" class="{{$storage.theme}}">
 
 				<div id="header-wrapper" class="{{$storage.theme}}">
@@ -97,8 +97,28 @@
 																		ng-repeat="x in $storage.newNamesLive.records | orderBy : '-likes'"
 																		ng-click="saveCollapseIndex($index)">
 																		
-																	  <uib-accordion-heading>
-																		I can have markup, too! <i class="fa-times"></i>
+																	  <uib-accordion-heading >
+																		
+																		<b>
+																			<font color="green">{{x.reward }}</font>
+																			<span style="margin-left:5px"><font color="blue">{{x.time }}</font></span>
+																			<span style="margin-left:5px"><font color="black">{{x.requester }} -</font></span>
+																			<span style="margin-left:10px"><font color="black"></font>{{ trimTitle(x.title) }}</span>
+																			
+																			
+																		
+																		
+																		<div class="pull-right">
+																			<span class="upVoteHeader fa fa-arrow-up  fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVoteHeader click', false:''}[buttonDisable==true]" >  </span>
+																			<b><span  style="margin-left:5px; margin-right:5px" ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>	 </b>
+																			<span class="downVoteHeader  fa fa-arrow-down fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVoteHeader click', false:''}[buttonDisable==false]"></span>																
+																			<span style="margin-left:15px" class="fa fa-pencil-square fa-lg" ng-click="open(x.Post, x.link)" ></span>
+																			<span ng-click="openURL(x.link)" class="pandaHeader fa fa-share fa-lg"  ></span>
+																			<a style="margin-left:15px" class="fa fa-times fa-lg" ng-click="deleteHit($index, x.link)"></a>
+																		</div>
+																		
+																		</b>
+																		
 																	  </uib-accordion-heading>		
 																  
 																	<div class="col-lg-11">												
@@ -106,31 +126,7 @@
 
 																	</div>
 																	
-																	<div class="col-lg-1"> 
-																		
-																		<div class="hitDetail {{$storage.theme}}">
-																		
-																			
-																			<div class="col-md-12">					
-																				<span class="upVote col-sm-12 fa fa-thumbs-o-up  fa-3x {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVote click', false:''}[buttonDisable==true]" >  </span>
-																				<span class=" col-sm-12 " ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>
-																				<span class="downVote col-sm-12  fa fa-thumbs-o-down fa-3x {{$storage.theme}}" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVote click', false:''}[buttonDisable==false]"></span>																
-																			</div>
-																		
-																		
-																			
-																			<div class="col-md-12 pandaContainer">
-																			
-																				<span ng-click="open(x.Post, x.link)" class="fa fa-pencil-square fa-4x pencil"></span>	
-																				<a href="{{x.link}}" target="_blank" >
-																					<button class="col-md-12 panda" ng-click="delete($index)" >PandA</button>
-																				</a>
-																			</div>
-																														
-																		</div>
-																		
-																		
-																	</div>	
+
 														  </uib-accordion-group>											 
 													</uib-accordion>
 												
@@ -151,6 +147,7 @@
 
 		</div>
 			
+	</div> 		
 	</body>
 	 <script>
 	 
