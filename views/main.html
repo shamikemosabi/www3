@@ -93,45 +93,40 @@
 									<article class="box post {{$storage.theme}}">
 											
 										<ul>						
-											<li ng-repeat="x in $storage.fullData">
-											
-											
-																	
-												<div class="hitContainer {{$storage.theme}}"> 
-												
-												
-													<div class="col-lg-11">												
-														<div class = "hitPost" ng-bind-html="x.newPost" ></div>	
 
-													</div>
+												<div class="hitContainer {{$storage.theme}} accordHeader"> 
+													 <uib-accordion class="accordHeader {{$storage.theme}}">
+														  <uib-accordion-group is-open="{true:true, false:false}[$index==$storage.collapseIndex]"																			
+																		ng-repeat="x in $storage.fullData "
+																		ng-click="saveCollapseIndex($index)">
+																		
+																	  <uib-accordion-heading >
+																		
+																		<b>
+																			<font color="green">{{x.reward }}</font>
+																			<span style="margin-left:5px"><font color="blue">{{x.time }}</font></span>
+																			<span style="margin-left:5px">{{x.requester }} -</span>
+																			<span style="margin-left:10px">{{ trimTitle(x.title) }}</span>
+																			
+																		<div class="pull-right">
+																			<span class="upVoteHeader fa fa-arrow-up  fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVoteHeader click', false:''}[buttonDisable==true]" >  </span>
+																			<b><span  style="margin-left:5px; margin-right:5px" ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>	 </b>
+																			<span class="downVoteHeader  fa fa-arrow-down fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVoteHeader click', false:''}[buttonDisable==false]"></span>																
+																			<span style="margin-left:15px" class="fa fa-pencil-square fa-lg" ng-click="open(x.Post, x.link)" ></span>
+																			<span ng-click="openURL(x.link)" class="pandaHeader fa fa-share fa-lg"  ></span>
+																			<a style="margin-left:15px" class="fa fa-times fa-lg" ng-click="delete($index)"></a>
+																		</div>
+																		
+																		</b>
+																		
+																	  </uib-accordion-heading>		
+																  
+																	<div class="col-lg-11">												
+																		<div class = "hitPost" ng-bind-html="x.newPost" ></div>	
+																	</div>																	
+														  </uib-accordion-group>											 
+													</uib-accordion>
 													
-													<div class="col-lg-1"> 
-														
-														<div class="hitDetail {{$storage.theme}}">
-														
-															
-															<div class="col-md-12">
-																<button  class="col-md-12 X" ng-click="deleteHit($index)" > x </button>
-																
-																<span class="upVote col-sm-12 fa fa-thumbs-o-up  fa-3x {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVote click', false:''}[buttonDisable==true]" >  </span>
-																<span class=" col-sm-12 " ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>
-																<span class="downVote col-sm-12  fa fa-thumbs-o-down fa-3x {{$storage.theme}}" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVote click', false:''}[buttonDisable==false]"></span>																
-															</div>
-														
-														
-															
-															<div class="col-md-12 pandaContainer">
-															
-																<span ng-click="open(x.Post, x.link)" class="fa fa-pencil-square fa-4x pencil"></span>	
-																<a href="{{x.link}}" target="_blank" >
-																	<button class="col-md-12 panda" ng-click="delete($index)" >PandA</button>
-																</a>
-															</div>
-																										
-														</div>
-														
-														
-													</div>	
 													
 												</div>
 											</li>

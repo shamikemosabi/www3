@@ -36,17 +36,43 @@
 
 					<div >
 						<button class="clearAll" ng-click ="reset()">Reload Hits</button>													
+					</div>	
+					 
+									
+					<div class="orderDD">
+							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{$storage.orderBy}}
+								<span class="caret"></span>
+							</button>
+							
+							<ul class="dropdown-menu" aria-labelledby="dropdown">
+								<li><a ng-click="$storage.orderBy = 'likes'">likes</a> </li>
+								<li><a ng-click="$storage.orderBy = 'reward'">reward</a> </li>							
+							</ul>
 					</div>
+						  
 					
 					<div class="lastUpdate {{$storage.theme}} ">
-						Last updated on {{date}}
+					
+					
+
+				
+					
+						 Last updated on {{date}} 
+						
+						
 					</div>
-						<div class="lastUpdate numberOfHits {{$storage.theme}}" > Hits Available : {{$storage.newNamesLive.records.length}}  </div>
+					
+					<span  class="lastUpdate numberOfHits {{$storage.theme}}"> Hits Available : {{$storage.newNamesLive.records.length}}  </span>
+					
+					
+					
+										
+					
+					
 					<div class="container">
 						<div class="row  {{$storage.theme}} fixMarginNoColor">
 												
 							<div class="3u 12u(mobile)">
-
 								
 									<section class="box container {{$storage.theme}}" >
 								
@@ -89,12 +115,11 @@
 							<div class="9u 12u(mobile) important(mobile)">
 									<article class="box post {{$storage.theme}}">
 						
-										<ul>						
-			
-												<div class="hitContainer {{$storage.theme}}"> 														
-													 <uib-accordion>
+										<ul>									
+												<div class="hitContainer {{$storage.theme}} accordHeader"> 														
+													 <uib-accordion class="accordHeader {{$storage.theme}}">
 														  <uib-accordion-group is-open="{true:true, false:false}[$index==$storage.collapseIndex]"																			
-																		ng-repeat="x in $storage.newNamesLive.records | orderBy : '-likes'"
+																		ng-repeat="x in $storage.newNamesLive.records | orderBy : $storage.orderBy"
 																		ng-click="saveCollapseIndex($index)">
 																		
 																	  <uib-accordion-heading >
@@ -102,8 +127,8 @@
 																		<b>
 																			<font color="green">{{x.reward }}</font>
 																			<span style="margin-left:5px"><font color="blue">{{x.time }}</font></span>
-																			<span style="margin-left:5px"><font color="black">{{x.requester }} -</font></span>
-																			<span style="margin-left:10px"><font color="black"></font>{{ trimTitle(x.title) }}</span>
+																			<span style="margin-left:5px">{{x.requester }} -</span>
+																			<span style="margin-left:10px">{{ trimTitle(x.title) }}</span>
 																			
 																			
 																		

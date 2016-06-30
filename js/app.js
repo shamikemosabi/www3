@@ -173,6 +173,11 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 	{
 		$scope.$storage.isMaster = false;
 	}
+	if($scope.$storage.RejectHit==null)
+	{
+		$scope.$storage.RejectHit = 0;
+	}
+	
 
 	// load default audio:
 	// if null then default
@@ -280,6 +285,7 @@ $scope.toggle = 1
 				$scope.cleanNull();
 				$scope.loadLikes();
 				$scope.renderHtmlData();
+				$scope.removeUnQualifyHits();
 			});		
 		
 		if($scope.$storage.oldNames!=null)
@@ -303,6 +309,89 @@ $scope.toggle = 1
 	};
 	
 	
+	$scope.removeUnQualifyHits = function()
+	{
+		//Use Qual Filter checked
+		if($scope.$storage.qualFilter)
+		{
+			for(var j = $scope.$storage.fullData.length - 1; j >= 0 ; j--){
+				var qual = $scope.$storage.fullData[j].qual;
+				var bool = true;
+				var qualArray = qual.split(";");
+				
+				for(var i = 0;i< qualArray.length ; i++)
+				{
+					var temp = qualArray[i];
+					if(temp!="")
+					{
+						if(temp.includes("Total approved HITs"))
+						{
+							if(temp.includes("greater than"))
+							{
+								var a = temp.replace("Total approved HITs is greater than","");
+								bool  = $scope.$storage.ApproveHit > a.trim();							
+							
+							}
+							else if(temp.includes("not less than"))
+							{
+								var a = temp.replace("Total approved HITs is not less than","");
+								bool  = $scope.$storage.ApproveHit > a.trim();
+							}
+						}
+						else if(temp.includes("HIT approval rate (%)"))
+						{
+							if(temp.includes("greater than"))
+							{
+								var a = temp.replace("HIT approval rate (%) is greater than","");
+								bool  = $scope.$storage.ApprovalRate > a.trim();							
+							
+							}
+							else if(temp.includes("not less than"))
+							{
+								var a = temp.replace("HIT approval rate (%) is not less than","");
+								bool  = $scope.$storage.ApprovalRate > a.trim();
+							}
+						}
+						else if(temp.includes("Location"))
+						{
+							if(temp.includes("Location is one of:"))
+							{
+								var a = temp.replace("Location is one of:","");
+								bool = a.includes($scope.$storage.location);
+							}							
+							else if(temp.includes("Location is"))
+							{
+								var a = temp.replace("Location is","");
+								bool = $scope.$storage.location == a.trim();
+							}
+							
+						}
+						else if(temp.includes("Masters") && temp.includes("has been granted"))
+						{
+							bool = $scope.$storage.isMaster
+						}
+						
+						if(!bool) // one qual already failed 
+						{
+							break;
+						}
+						
+						
+					}					
+				}
+				
+				//delete bool = false
+				if(!bool)	
+				{					
+					$scope.$storage.fullData.splice(j,1);
+				}
+				
+			}
+		}	
+		
+	}
+	
+	
 	$scope.replaceObj  = function(oldObj, newObj)
 	{
 		//	var oldObj = [];
@@ -311,13 +400,34 @@ $scope.toggle = 1
 		
 		for (var i=0; i<newObj.records.length; i++) {
 			var v = newObj.records[i];
-			var v1 = {Post:v.Post, link:v.link}; // data is referenced so if I changed newName oldName gets changed too automaticall.. so i need to create new obj
+			var v1 = {Post:v.Post, link:v.link, requester:v.requester, title:v.title, time:v.time, reward:v.reward, qual:v.qual}; // data is referenced so if I changed newName oldName gets changed too automaticall.. so i need to create new obj
 			$scope.$storage.oldNames.records.push(v1);
 		}
 		$scope.$storage.oldNames.date = newObj.date;
 		
 		//return oldObj;
 	};
+	
+	
+	$scope.saveCollapseIndex = function(o)
+	{		
+		$scope.$storage.collapseIndex = o;
+	}
+	$scope.trimTitle = function(s)
+	{
+		var ret ="";
+		if(s.length > 35)
+		{
+			ret =s.substring(0, 34) + "...";
+		}		
+		else
+		{
+			ret = s;
+		}
+		
+		return ret;
+		
+	}
 	
 	
 	$scope.renderHtmlData  = function()
@@ -910,7 +1020,8 @@ $scope.toggle = 1
 															"ApproveHit" : $scope.$storage.ApproveHit,
 															"ApprovalRate" : $scope.$storage.ApprovalRate,
 															"location"     : $scope.$storage.location,
-															"isMaster"	   : $scope.$storage.isMaster
+															"isMaster"	   : $scope.$storage.isMaster,
+															"RejectHit"		: $scope.$storage.RejectHit
 															});
 															
 		$scope.loginSuccMsg = "Setting Saved Successfully.";
@@ -937,7 +1048,8 @@ $scope.toggle = 1
 												"ApproveHit" : 0,
 												"ApprovalRate" : 0,
 												"location"     : 'US',
-												"isMaster"	   : false
+												"isMaster"	   : false ,
+												"RejectHit"		: 0
 												});										
 			
 		}
@@ -948,6 +1060,7 @@ $scope.toggle = 1
 			$scope.$storage.ApprovalRate =  rec.qual.ApprovalRate;
 			$scope.$storage.location =  rec.qual.location ;
 			$scope.$storage.isMaster =  rec.qual.isMaster ;
+			$scope.$storage.RejectHit = rec.qual.RejectHit;
 							
 		}
 		

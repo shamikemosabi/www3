@@ -2670,6 +2670,10 @@
 				color:#d3d3d3;
 			}
 			
+			
+
+			
+			
 	
 	.hitPost{
 		padding:5px;
@@ -2885,6 +2889,19 @@ width:100%;
 
 	}
 	
+	.orderDD{
+		position:absolute;
+		top:0;
+		left:12%;
+		color:#5D5D5D;
+		font-family: 'Source Sans Pro';
+		font-size : 20px;
+		font-weight: 700;
+		padding-top:2px;
+	}
+
+	
+	
 	.lastUpdate{
 		position:absolute;
 		top:0;
@@ -2981,3 +2998,15 @@ width:100%;
 	outline: none;
 	
 	}
+	
+	
+	uib-accordion.accordHeader.dark .panel-default>.panel-heading {
+			background:#181818;
+				color:#d3d3d3;
+	}
+	
+	uib-accordion.accordHeader.dark .panel-default>.panel-heading+.panel-collapse>.panel-body{
+		background:#181818;
+				color:#d3d3d3;
+	}
+

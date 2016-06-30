@@ -152,6 +152,15 @@
 								
 								<div style="margin-bottom: 10px" class="input-group">
 									<div class="col-md-6 ">
+										<label class="label label-default" >Total Rejected HITs</label>
+									</div>
+									<div class="col-md-6 ">
+										<input ng-model="$storage.RejectHit" ng-disabled="!$storage.qualFilter" type="number" class="form-control"  value="" placeholder="12" onblur="this.placeholder ='12'" onfocus="this.placeholder = ''">   
+									</div>
+								</div>
+								
+								<div style="margin-bottom: 10px" class="input-group">
+									<div class="col-md-6 ">
 										<label class="label label-default" >Location is </label>
 									</div>
 									<div class="col-md-6">

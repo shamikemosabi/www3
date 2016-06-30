@@ -92,7 +92,7 @@ app.controller('betaCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $
 					document.title = this.Vars.OriginalTitle;   
 				}
 	};
-	$scope.$storage.ApproveHit
+	
 	if($scope.$storage.theme==null)
 	{
 		$scope.$storage.theme = "light";
@@ -106,6 +106,7 @@ app.controller('betaCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $
 		//$scope.$storage.oldNamesLive.records = [];
 	}
 
+	
 	// load default audio:
 	// if null then default
 	// if it's not null, but it's an really old date that's more then 1 weeks, then force it to be 1 weeks.
@@ -158,21 +159,23 @@ $scope.toggle = 1
 	$scope.getData = function(){
 		    $http.get("testLive.aspx")
 			.success(function(response) {
-				$scope.$storage.newNamesLive = response;
-			
 				
-				// remove hits that exceed a cretain href
-				$scope.removeExpiredHits();
-				//loop thru $scope.$storage.newNames.records, get rid of the ones we already have.
-				$scope.removeDeletedHits();
-				
-				//$scope.cleanNull();
+				if($scope.date != response.date)
+				{
+					$scope.$storage.newNamesLive = response;
+					
+					$scope.date = response.date	
+					// remove hits that exceed a cretain href
+					$scope.removeExpiredHits();
+					//loop thru $scope.$storage.newNames.records, get rid of the ones we already have.
+					$scope.removeDeletedHits();					
+					$scope.renderHtmlData();
+					$scope.alertSound();
+				}				
+				$scope.removeUnQualifyHits();
 				$scope.loadLikes();
-				$scope.renderHtmlData();
-				
-				$scope.alertSound();
-				
-				$scope.date = $scope.$storage.newNamesLive.date;
+
+			//	$scope.date = $scope.$storage.newNamesLive.date;
 			});		
 		
 	};
@@ -209,7 +212,7 @@ $scope.toggle = 1
 		for (var key in $scope.$storage.oldNamesLive.records){
 		  oldDate = $scope.$storage.oldNamesLive.records[key];
 		  currDate = new Date().getTime();		 
-		 if ((currDate - oldDate) > 14400000 ) //4 hr 
+		 if ((currDate - oldDate) > 43200000 ) //4 hr 
 		 {
 			 console.log("removed expired hit");
 			 delete $scope.$storage.oldNamesLive.records[key];
@@ -237,6 +240,89 @@ $scope.toggle = 1
 		}		
 		
 	};
+	
+	
+	$scope.removeUnQualifyHits = function()
+	{
+		//Use Qual Filter checked
+		if($scope.$storage.qualFilter)
+		{
+			for(var j = $scope.$storage.newNamesLive.records.length - 1; j >= 0 ; j--){
+				var qual = $scope.$storage.newNamesLive.records[j].qual;
+				var bool = true;
+				var qualArray = qual.split(";");
+				
+				for(var i = 0;i< qualArray.length ; i++)
+				{
+					var temp = qualArray[i];
+					if(temp!="")
+					{
+						if(temp.includes("Total approved HITs"))
+						{
+							if(temp.includes("greater than"))
+							{
+								var a = temp.replace("Total approved HITs is greater than","");
+								bool  = $scope.$storage.ApproveHit > a.trim();							
+							
+							}
+							else if(temp.includes("not less than"))
+							{
+								var a = temp.replace("Total approved HITs is not less than","");
+								bool  = $scope.$storage.ApproveHit > a.trim();
+							}
+						}
+						else if(temp.includes("HIT approval rate (%)"))
+						{
+							if(temp.includes("greater than"))
+							{
+								var a = temp.replace("HIT approval rate (%) is greater than","");
+								bool  = $scope.$storage.ApprovalRate > a.trim();							
+							
+							}
+							else if(temp.includes("not less than"))
+							{
+								var a = temp.replace("HIT approval rate (%) is not less than","");
+								bool  = $scope.$storage.ApprovalRate > a.trim();
+							}
+						}
+						else if(temp.includes("Location"))
+						{
+							if(temp.includes("Location is one of:"))
+							{
+								var a = temp.replace("Location is one of:","");
+								bool = a.includes($scope.$storage.location);
+							}							
+							else if(temp.includes("Location is"))
+							{
+								var a = temp.replace("Location is","");
+								bool = $scope.$storage.location == a.trim();
+							}
+							
+						}
+						else if(temp.includes("Masters") && temp.includes("has been granted"))
+						{
+							bool = $scope.$storage.isMaster
+						}
+						
+						if(!bool) // one qual already failed 
+						{
+							break;
+						}
+						
+						
+					}					
+				}
+				
+				//delete bool = false
+				if(!bool)	
+				{
+					$scope.$storage.newNamesLive.records.splice(j,1);
+				}
+				
+			}
+		}	
+		
+	}
 	
 	$scope.deleteHit = function(o,l){
 		//Can't just splice by index anymore. Order by messed up index.
@@ -748,6 +834,8 @@ $scope.toggle = 1
 		$scope.$storage.oldNamesLive.records = {};
 		//delete $scope.$storage.newNames;
 		//delete $scope.$storage.bSound;
+		
+		$scope.date = "" //reset date so it think it's new.
 		
 		$scope.names = "";
 		PageTitleNotification.Off();
