@@ -39,6 +39,21 @@
 						<button class="clearAll" ng-click ="reset()">Clear All</button>													
 					</div>
 					
+					<div class="orderDD">
+							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">{{$storage.orderBy}}
+								<span class="caret"></span>
+							</button>
+							
+							<ul class="dropdown-menu" aria-labelledby="dropdown">
+								<li><a ng-click="setOrderBy('',false)">None</a> </li>
+								<li><a ng-click="setOrderBy('likes',true)">likes</a> </li>
+								<li><a ng-click="setOrderBy('reward',true)">Reward</a> </li>
+								<li><a ng-click="setOrderBy('requester',false)">Requester</a> </li>
+								<li><a ng-click="setOrderBy('title',false)">Title</a> </li>
+							</ul>
+					</div>
+					
+					
 					<div class="lastUpdate {{$storage.theme}}">
 						Last updated on {{date}}
 					</div>
@@ -97,22 +112,23 @@
 												<div class="hitContainer {{$storage.theme}} accordHeader"> 
 													 <uib-accordion class="accordHeader {{$storage.theme}}">
 														  <uib-accordion-group is-open="{true:true, false:false}[$index==$storage.collapseIndex]"																			
-																		ng-repeat="x in $storage.fullData "
+																		ng-repeat="x in $storage.fullData | orderBy : $storage.orderBy "
 																		ng-click="saveCollapseIndex($index)">
 																		
 																	  <uib-accordion-heading >
 																		
 																		<b>
+																		    <font color="red"><i ng-show="x.isMaster" style="margin-right:8px" class="fa fa-maxcdn "></i></font>
 																			<font color="green">{{x.reward }}</font>
 																			<span style="margin-left:5px"><font color="blue">{{x.time }}</font></span>
-																			<span style="margin-left:5px">{{x.requester }} -</span>
+																			<span style="margin-left:5px"> <font color="#8C001A"> {{ trimReq(x.requester) }} - </font></span>
 																			<span style="margin-left:10px">{{ trimTitle(x.title) }}</span>
 																			
 																		<div class="pull-right">
 																			<span class="upVoteHeader fa fa-arrow-up  fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVoteHeader click', false:''}[buttonDisable==true]" >  </span>
 																			<b><span  style="margin-left:5px; margin-right:5px" ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>	 </b>
 																			<span class="downVoteHeader  fa fa-arrow-down fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVoteHeader click', false:''}[buttonDisable==false]"></span>																
-																			<span style="margin-left:15px" class="fa fa-pencil-square fa-lg" ng-click="open(x.Post, x.link)" ></span>
+																			<font color="#00802b"><span style="margin-left:15px" class="fa fa-pencil-square fa-lg" ng-click="open(x.Post, x.link)" ></span></font>
 																			<span ng-click="openURL(x.link)" class="pandaHeader fa fa-share fa-lg"  ></span>
 																			<a style="margin-left:15px" class="fa fa-times fa-lg" ng-click="delete($index)"></a>
 																		</div>

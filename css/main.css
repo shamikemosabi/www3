@@ -1971,7 +1971,7 @@
 		
 		
 			#header-wrapper {
-				padding: 2.5em 0 2em 0;
+				padding: 1em 0 1em 0;
 				margin: 1em 1em 1em 1em;
 	
 			}
@@ -2653,7 +2653,6 @@
 	.hitContainer{
 		width:100%;
 		background:white;
-		min-height: 350px;
 		position:relative;
 		overflow: auto;
 		margin-bottom: 1em;
@@ -2792,6 +2791,8 @@
 		
 		.upVoteHeader{	
 			color: black;
+		}.upVoteHeader.dark{	
+			color: lightgrey;
 		}	
 
 		.upVoteHeader.click{
@@ -2816,8 +2817,13 @@
 				color:red;
 				
 			}
+			
+			
 		.downVoteHeader{	
 					color: black;
+				}	
+				.downVoteHeader.dark{
+					color: lightgrey;
 				}	
 
 		.downVoteHeader.click{
@@ -2971,12 +2977,11 @@ width:100%;
 	}
 	
 	.title{
-		color:#5D5D5D;
-		
-	
+		color:black;
+		font-size: 40px;	
 	}
 	.title.light{
-		color:#5D5D5D;
+		color:black;
 		
 	
 	}
@@ -3002,11 +3007,11 @@ width:100%;
 	
 	uib-accordion.accordHeader.dark .panel-default>.panel-heading {
 			background:#181818;
-				color:#d3d3d3;
+				color:#a6a6a6;
 	}
 	
 	uib-accordion.accordHeader.dark .panel-default>.panel-heading+.panel-collapse>.panel-body{
 		background:#181818;
-				color:#d3d3d3;
+				color:#a6a6a6;
 	}
 

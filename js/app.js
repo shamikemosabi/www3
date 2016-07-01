@@ -246,16 +246,19 @@ $scope.toggle = 1
 			
 				// compare new with local old if same then do nothing.
 				// OR if oldName hasn't been initiazed
-				if(angular.equals($scope.$storage.oldNames.records, $scope.$storage.newNames.records)) 
-				{
-					//console.log("true");
-				}
-				else //new data
+				
+				
+				
+					
+				//if(angular.equals($scope.$storage.oldNames.records, $scope.$storage.newNames.records)) 
+				if($scope.date != $scope.$storage.newNames.date)
 				{
 					//console.log("false");
 					//set old storage with new
 					//$scope.$storage.oldNames  = $scope.$storage.newNames
 					$scope.replaceObj($scope.$storage.oldNames,  $scope.$storage.newNames);
+					
+					
 					
 					//let's change newNames Post into html, when we add to fullData it's already html safe
 					//$scope.renderHtmlData();
@@ -286,13 +289,14 @@ $scope.toggle = 1
 				$scope.loadLikes();
 				$scope.renderHtmlData();
 				$scope.removeUnQualifyHits();
-			});		
-		
-		if($scope.$storage.oldNames!=null)
-		{
-			$scope.date = $scope.$storage.oldNames.date;
-		}
-		
+			});	
+			
+			//This is actually important, this gets called before http get, so date is not null, so we do the comparison correctly
+			if($scope.$storage.oldNames!=null)
+			{
+				$scope.date = $scope.$storage.oldNames.date;
+			}			
+
 	};
 	
 	// some reason grabbing data always has a trailing null object... lets get rid of it
@@ -308,11 +312,23 @@ $scope.toggle = 1
 		}	
 	};
 	
+	$scope.setOrderBy = function(s, b)
+	{
+		if(b)
+		{
+			$scope.$storage.orderBy  = "-"+s;
+		}
+		else
+		{
+			$scope.$storage.orderBy = s;
+		}	
+	}
+	
 	
 	$scope.removeUnQualifyHits = function()
 	{
 		//Use Qual Filter checked
-		if($scope.$storage.qualFilter)
+		if($scope.$storage.qualFilter && $scope.$storage.fullData != null)
 		{
 			for(var j = $scope.$storage.fullData.length - 1; j >= 0 ; j--){
 				var qual = $scope.$storage.fullData[j].qual;
@@ -326,31 +342,51 @@ $scope.toggle = 1
 					{
 						if(temp.includes("Total approved HITs"))
 						{
-							if(temp.includes("greater than"))
+							if(temp.includes("is greater than"))
 							{
 								var a = temp.replace("Total approved HITs is greater than","");
 								bool  = $scope.$storage.ApproveHit > a.trim();							
 							
+							}
+							else if(temp.includes("is not greater"))
+							{
+								var a = temp.replace("Total approved HITs is not greater than","");
+								bool  = $scope.$storage.ApproveHit < a.trim();	
 							}
 							else if(temp.includes("not less than"))
 							{
 								var a = temp.replace("Total approved HITs is not less than","");
 								bool  = $scope.$storage.ApproveHit > a.trim();
 							}
+							else if(temp.includes("is less than"))
+							{
+								var a = temp.replace("Total approved HITs is less than","");
+								bool  = $scope.$storage.ApproveHit < a.trim();							
+							}
 						}
 						else if(temp.includes("HIT approval rate (%)"))
 						{
-							if(temp.includes("greater than"))
+							if(temp.includes("is greater than"))
 							{
 								var a = temp.replace("HIT approval rate (%) is greater than","");
 								bool  = $scope.$storage.ApprovalRate > a.trim();							
-							
+							}
+							else if(temp.includes("is not greater"))
+							{
+								var a = temp.replace("HIT approval rate (%) is not greater than","");
+								bool  = $scope.$storage.ApprovalRate < a.trim();	
 							}
 							else if(temp.includes("not less than"))
 							{
 								var a = temp.replace("HIT approval rate (%) is not less than","");
 								bool  = $scope.$storage.ApprovalRate > a.trim();
 							}
+							else if(temp.includes("is less than"))
+							{
+								var a = temp.replace("HIT approval rate (%) is less than","");
+								bool  = $scope.$storage.ApprovalRate < a.trim();							
+							}
+							
 						}
 						else if(temp.includes("Location"))
 						{
@@ -358,7 +394,12 @@ $scope.toggle = 1
 							{
 								var a = temp.replace("Location is one of:","");
 								bool = a.includes($scope.$storage.location);
-							}							
+							}		
+							else if(temp.includes("Location is not"))
+							{
+								var a = temp.replace("Location is not","");
+								bool = $scope.$storage.location != a.trim();
+							}
 							else if(temp.includes("Location is"))
 							{
 								var a = temp.replace("Location is","");
@@ -429,6 +470,22 @@ $scope.toggle = 1
 		
 	}
 	
+	$scope.trimReq = function(s)
+	{
+		var ret ="";
+		if(s.length > 20)
+		{
+			ret =s.substring(0, 19) + "...";
+		}		
+		else
+		{
+			ret = s;
+		}
+		
+		return ret;	
+	}
+	
+	
 	
 	$scope.renderHtmlData  = function()
 	{
@@ -438,6 +495,8 @@ $scope.toggle = 1
 				var v =  $scope.$storage.fullData[i];
 				if($scope.$storage.fullData[i].Post.constructor.name!="TrustedValueHolderType"){
 					v.newPost = $scope.renderHtml(v.Post);
+					
+					v.isMaster = (v.qual.includes("Masters") && v.qual.includes("has been granted") ? true : false);
 				}
 				
 			}
