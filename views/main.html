@@ -128,8 +128,8 @@
 																			<span class="upVoteHeader fa fa-arrow-up  fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, true)" ng-disabled="buttonDisable" ng-class="{true:'upVoteHeader click', false:''}[buttonDisable==true]" >  </span>
 																			<b><span  style="margin-left:5px; margin-right:5px" ng-class="{'upClick': x.likes>=1, downClick: x.likes < 0 , }" > {{x.likes}}</span>	 </b>
 																			<span class="downVoteHeader  fa fa-arrow-down fa-lg {{$storage.theme}}" ng-click="updateHit(this, x.link, false)" ng-disabled="buttonDisable==false"   ng-class="{true:'downVoteHeader click', false:''}[buttonDisable==false]"></span>																
-																			<font color="#00802b"><span style="margin-left:15px" class="fa fa-pencil-square fa-lg" ng-click="open(x.Post, x.link)" ></span></font>
-																			<span ng-click="openURL(x.link)" class="pandaHeader fa fa-share fa-lg"  ></span>
+																			<font color="#00802b"><span style="margin-left:15px" class="fa fa-pencil-square fa-lg" ng-click="open(x.Post, x.link)" ></span></font>																			
+																			<a ng-click="openURL(x.link, $index)" class="pandaHeader fa fa-share fa-lg"  ></a>
 																			<a style="margin-left:15px" class="fa fa-times fa-lg" ng-click="delete($index)"></a>
 																		</div>
 																		

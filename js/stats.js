@@ -376,9 +376,12 @@ $scope.toggle = 1
 		$scope.$storage.collapseIndex = o;
 	}
 	
-	$scope.openURL = function(s)
-	{
+	$scope.openURL = function(s,j)
+	{		  
 		 $window.open(s, '_blank');
+		// $scope.$storage.newNamesLive.records.splice(j,1);
+		$scope.deleteHit(j,s);
+		 
 	}
 	
 	$scope.trimTitle = function(s)

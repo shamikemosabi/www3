@@ -55,7 +55,7 @@ app.directive('scrollBot', function() {
 
 	
 	
-app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject ) {
+app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeout, $sce, ngAudio, $firebaseArray, $uibModal , $firebaseObject,$window ) {
 	$scope.options = {
 		linkTarget       : '_blank',  
 	    image    : {
@@ -454,6 +454,14 @@ $scope.toggle = 1
 	{		
 		$scope.$storage.collapseIndex = o;
 	}
+	
+	$scope.openURL = function(s,j)
+	{		  
+		 $window.open(s, '_blank');
+		 $scope.$storage.fullData.splice(j,1);
+		 
+	}
+	
 	$scope.trimTitle = function(s)
 	{
 		var ret ="";

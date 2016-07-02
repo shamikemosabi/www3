@@ -2746,9 +2746,13 @@
 			color:white;
 			float:right;
 		}
-		
-	.pandaHeader{	
-			color:red;
+
+		.pandaHeader{
+				color:red;
+		}
+	.pandaHeader:hover{	
+	color:red;
+			text-decoration: none;
 		}		
 		
 		.pandaContainer{
