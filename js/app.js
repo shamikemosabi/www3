@@ -111,6 +111,11 @@ app.controller('customersCtrl' ,  function($scope, $http ,$localStorage,  $timeo
 		  },			  
 	}
 
+	
+	new Fingerprint2().get(function(result, components){	 
+	  $scope.anonID = result;
+	});
+
  
 	$scope.$storage =  $localStorage;	
 	 
@@ -837,7 +842,7 @@ $scope.toggle = 1
 			
 		}
 		else{
-			user = "Anonymous";
+			user = "Anonymous" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5))   ;
 		}
 		
 		
