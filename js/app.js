@@ -546,6 +546,9 @@ $scope.toggle = 1
 			},
 			loginList: function(){
 				return loginList;
+			},
+			anonID: function(){
+				return $scope.anonID;
 			}
 			
 		}
@@ -1320,10 +1323,9 @@ $scope.toggle = 1
 
 
 
-
 app.controller('PopupInstanceController',
-	['$scope','$uibModalInstance', 'title', 'hitList', 'link', '$sce', 'ref' , '$firebaseArray', 'chat', 'nickName', 'linkRaw', 'loginList',
-		function ($scope, $uibModalInstance, title, hitList, link, $sce, ref,  $firebaseArray, chat, nickName, linkRaw,loginList) {
+	['$scope','$uibModalInstance', 'title', 'hitList', 'link', '$sce', 'ref' , '$firebaseArray', 'chat', 'nickName', 'linkRaw', 'loginList', 'anonID',
+		function ($scope, $uibModalInstance, title, hitList, link, $sce, ref,  $firebaseArray, chat, nickName, linkRaw,loginList, anonID) {
 			$scope.title = title;
 			$scope.hitList  = hitList
 			$scope.ref   = ref
@@ -1331,6 +1333,7 @@ app.controller('PopupInstanceController',
 			$scope.chat = chat
 			$scope.nickName = (nickName == null ? "" : nickName);	
 			$scope.linkRaw = linkRaw
+			$scope.anonID = anonID
 			
 			$scope.close = function () {
 			$uibModalInstance.dismiss('cancel');
@@ -1441,8 +1444,8 @@ app.controller('PopupInstanceController',
 						user =  obj.user
 					});	
 				}
-				else{
-					user = "Anonymous";
+				else{					
+					user = "Anonymous" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5));
 				}
 				
 				return user;

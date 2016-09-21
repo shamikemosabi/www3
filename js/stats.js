@@ -474,6 +474,9 @@ $scope.toggle = 1
 			},
 			loginList: function(){
 				return loginList;
+			},
+			anonID: function(){
+				return $scope.anonID;
 			}
 			
 		}
