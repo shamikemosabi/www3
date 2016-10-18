@@ -474,6 +474,9 @@ $scope.toggle = 1
 			},
 			loginList: function(){
 				return loginList;
+			},
+			anonID: function(){
+				return $scope.anonID;
 			}
 			
 		}
@@ -767,7 +770,7 @@ $scope.toggle = 1
 			});	
 		}
 		else{
-				user = "Anonymous" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5))   ;
+				user = "Anon" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5))   ;
 		}
 		
 		return user;

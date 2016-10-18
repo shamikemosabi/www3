@@ -546,6 +546,9 @@ $scope.toggle = 1
 			},
 			loginList: function(){
 				return loginList;
+			},
+			anonID: function(){
+				return $scope.anonID;
 			}
 			
 		}
@@ -842,7 +845,7 @@ $scope.toggle = 1
 			
 		}
 		else{
-			user = "Anonymous" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5))   ;
+			user = "Anon" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5))   ;
 		}
 		
 		
@@ -936,11 +939,20 @@ $scope.toggle = 1
 		return $sce.trustAsHtml(html_code);
 	};
 	
-
-
-
-	$scope.delete = function(o){
-	   $scope.$storage.fullData.splice(o,1);
+	
+	$scope.delete = function(o,l){
+	   //$scope.$storage.fullData.splice(o,1);
+	   
+	   
+	   		for (var i=0; i< $scope.$storage.fullData.length; i++) {
+			var v =  $scope.$storage.fullData[i];
+			var link = v.link;
+			
+			if(link == l)
+			{
+				$scope.$storage.fullData.splice(i,1);
+			}
+		}		  			
 	};
 	 	
 		//refresh
@@ -1320,10 +1332,9 @@ $scope.toggle = 1
 
 
 
-
 app.controller('PopupInstanceController',
-	['$scope','$uibModalInstance', 'title', 'hitList', 'link', '$sce', 'ref' , '$firebaseArray', 'chat', 'nickName', 'linkRaw', 'loginList',
-		function ($scope, $uibModalInstance, title, hitList, link, $sce, ref,  $firebaseArray, chat, nickName, linkRaw,loginList) {
+	['$scope','$uibModalInstance', 'title', 'hitList', 'link', '$sce', 'ref' , '$firebaseArray', 'chat', 'nickName', 'linkRaw', 'loginList', 'anonID',
+		function ($scope, $uibModalInstance, title, hitList, link, $sce, ref,  $firebaseArray, chat, nickName, linkRaw,loginList, anonID) {
 			$scope.title = title;
 			$scope.hitList  = hitList
 			$scope.ref   = ref
@@ -1331,6 +1342,7 @@ app.controller('PopupInstanceController',
 			$scope.chat = chat
 			$scope.nickName = (nickName == null ? "" : nickName);	
 			$scope.linkRaw = linkRaw
+			$scope.anonID = anonID
 			
 			$scope.close = function () {
 			$uibModalInstance.dismiss('cancel');
@@ -1441,8 +1453,8 @@ app.controller('PopupInstanceController',
 						user =  obj.user
 					});	
 				}
-				else{
-					user = "Anonymous";
+				else{					
+					user = "Anon" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5));
 				}
 				
 				return user;
