@@ -1454,7 +1454,7 @@ app.controller('PopupInstanceController',
 					});	
 				}
 				else{					
-					user = "Anon" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5));
+						user = "Anon" + ($scope.anonID==null ? "" : $scope.anonID.substring(0,5));
 				}
 				
 				return user;
